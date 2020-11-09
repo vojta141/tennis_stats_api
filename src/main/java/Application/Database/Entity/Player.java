@@ -70,11 +70,15 @@ public class Player {
         this.bigPoints = bigPoints;
     }
 
-    public int getClubID() {
-        return clubID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setClubID(int clubID) {
-        this.clubID = clubID;
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
     }
 }
