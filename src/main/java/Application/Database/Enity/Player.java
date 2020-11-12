@@ -1,29 +1,32 @@
-package Application.Database.Entity;
+package Application.Database.Enity;
 
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Player {
 
     @Id
-    @GeneratedValue
     private int id;
 
     @NotNull
-    String name;
+    private String name;
 
     @NotNull
-    Date birthDate;
+    private Date birthDate;
 
-    int bigPoints;
+    private int bigPoints;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CLUB_CLUBID")
+    @JoinColumn(name = "club_id")
     private Club club;
+
+    @ManyToMany(mappedBy = "players")
+    private Set<Tournament> tournaments;
 
     public Player() {
 
