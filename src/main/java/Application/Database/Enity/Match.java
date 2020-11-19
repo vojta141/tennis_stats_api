@@ -7,7 +7,7 @@ import javax.persistence.*;
 @MappedSuperclass
 public class Match {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
