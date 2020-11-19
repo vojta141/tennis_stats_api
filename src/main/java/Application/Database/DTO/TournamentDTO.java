@@ -12,24 +12,25 @@ import java.util.List;
 
 public class TournamentDTO {
 
-    private int id;
+    private final int id;
 
-    private Date date;
+    private final Date date;
 
-    private String name;
+    private final String name;
 
-    private String category;
+    private final String category;
 
-    private Club club;
+    private final int club;
 
-    private List<Integer> singlesIDs;
+    private final List<Integer> singlesIDs;
 
-    private List<Integer> doublesIDs;
+    private final List<Integer> doublesIDs;
 
-    private List<Integer> playerIDs;
+    private final List<Integer> playerIDs;
 
-    public TournamentDTO(int id, Date date, String name, String category, Club club,
-                         List<Integer> singlesIDs, List<Integer> doublesIDs, List<Integer> playerIDs) {
+    public TournamentDTO(int id, Date date, String name, String category, int club,
+                         List<Integer> singlesIDs, List<Integer> doublesIDs,
+                         List<Integer> playerIDs) {
         this.id = id;
         this.date = date;
         this.name = name;
@@ -56,7 +57,7 @@ public class TournamentDTO {
         return category;
     }
 
-    public Club getClub() {
+    public int getClub() {
         return club;
     }
 

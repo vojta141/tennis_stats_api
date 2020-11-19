@@ -9,28 +9,28 @@ import javax.persistence.ManyToOne;
 
 public class SinglesDTO extends MatchDTO{
 
-    private Player winner;
+    private final int winner;
 
-    private Player loser;
+    private final int loser;
 
-    private Tournament tournament;
+    private final int tournament;
 
-    public SinglesDTO(int id, String score, Player winner, Player loser, Tournament tournament) {
+    public SinglesDTO(int id, String score, int winner, int loser, int tournament) {
         super(id, score);
         this.winner = winner;
         this.loser = loser;
         this.tournament = tournament;
     }
 
-    public Player getWinner() {
+    public int getWinner() {
         return winner;
     }
 
-    public Player getLoser() {
+    public int getLoser() {
         return loser;
     }
 
-    public Tournament getTournament() {
+    public int getTournament() {
         return tournament;
     }
 }

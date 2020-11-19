@@ -1,7 +1,7 @@
 package Application.Database.DTO;
 
 public class ClubCreateDTO {
-    String name;
+    private final String name;
 
     public ClubCreateDTO(String name) {
         this.name = name;

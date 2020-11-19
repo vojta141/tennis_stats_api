@@ -7,22 +7,22 @@ import java.util.Set;
 
 public class PlayerCreateDTO {
 
-    private String name;
+    private final String name;
 
-    private Date birthDate;
+    private final Date birthDate;
 
-    private int bigPoints;
+    private final int bigPoints;
 
-    private Club club;
+    private final int clubId;
 
-    private Set<Integer> tournamentIDs;
+    private final Set<Integer> tournamentIDs;
 
     public PlayerCreateDTO(String name, Date birthDate, int bigPoints,
-                     Club club, Set<Integer> tournamentIDs) {
+                           int clubId, Set<Integer> tournamentIDs) {
         this.name = name;
         this.birthDate = birthDate;
         this.bigPoints = bigPoints;
-        this.club = club;
+        this.clubId = clubId;
         this.tournamentIDs = tournamentIDs;
     }
 
@@ -38,8 +38,8 @@ public class PlayerCreateDTO {
         return bigPoints;
     }
 
-    public Club getClub() {
-        return club;
+    public int getClubId() {
+        return clubId;
     }
 
     public Set<Integer> getTournamentIDs() {

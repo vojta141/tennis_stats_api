@@ -10,25 +10,24 @@ import java.util.Set;
 
 public class PlayerDTO {
 
-    private int id;
+    private final int id;
 
-    private String name;
+    private final String name;
 
-    private Date birthDate;
+    private final Date birthDate;
 
-    private int bigPoints;
+    private final int bigPoints;
 
-    private Club club;
+    private final int clubId;
 
     private Set<Integer> tournamentIDs;
 
-    public PlayerDTO(int id, String name, Date birthDate, int bigPoints,
-                     Club club, Set<Integer> tournamentIDs) {
+    public PlayerDTO(int id, String name, Date birthDate, int bigPoints, int clubId, Set<Integer> tournamentIDs) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.bigPoints = bigPoints;
-        this.club = club;
+        this.clubId = clubId;
         this.tournamentIDs = tournamentIDs;
     }
 
@@ -48,8 +47,8 @@ public class PlayerDTO {
         return bigPoints;
     }
 
-    public Club getClub() {
-        return club;
+    public int getClubId() {
+        return clubId;
     }
 
     public Set<Integer> getTournamentIDs() {

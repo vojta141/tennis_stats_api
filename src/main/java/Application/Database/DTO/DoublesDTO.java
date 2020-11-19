@@ -9,43 +9,42 @@ import javax.persistence.ManyToOne;
 
 public class DoublesDTO extends MatchDTO{
 
-    private Player winner1;
+    private final int winner1Id;
 
-    private Player winner2;
+    private final int winner2Id;
 
-    private Player loser1;
+    private final int loser1Id;
 
-    private Player loser2;
+    private final int loser2Id;
 
-    private Tournament tournament;
+    private final int tournamentId;
 
-    public DoublesDTO(int id, String score, Player winner1, Player winner2,
-                      Player loser1, Player loser2, Tournament tournament) {
+    public DoublesDTO(int id, String score, int winner1Id, int winner2Id, int loser1Id, int loser2Id, int tournamentId) {
         super(id, score);
-        this.winner1 = winner1;
-        this.winner2 = winner2;
-        this.loser1 = loser1;
-        this.loser2 = loser2;
-        this.tournament = tournament;
+        this.winner1Id = winner1Id;
+        this.winner2Id = winner2Id;
+        this.loser1Id = loser1Id;
+        this.loser2Id = loser2Id;
+        this.tournamentId = tournamentId;
     }
 
-    public Player getWinner1() {
-        return winner1;
+    public int getWinner1Id() {
+        return winner1Id;
     }
 
-    public Player getWinner2() {
-        return winner2;
+    public int getWinner2Id() {
+        return winner2Id;
     }
 
-    public Player getLoser1() {
-        return loser1;
+    public int getLoser1Id() {
+        return loser1Id;
     }
 
-    public Player getLoser2() {
-        return loser2;
+    public int getLoser2Id() {
+        return loser2Id;
     }
 
-    public Tournament getTournament() {
-        return tournament;
+    public int getTournamentId() {
+        return tournamentId;
     }
 }
