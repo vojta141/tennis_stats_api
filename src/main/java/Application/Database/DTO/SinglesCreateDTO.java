@@ -4,11 +4,15 @@ import Application.Database.Enity.Player;
 import Application.Database.Enity.Tournament;
 
 public class SinglesCreateDTO extends MatchCreateDTO {
-    private final int winner;
+    private int winner;
 
-    private final int loser;
+    private int loser;
 
-    private final int tournament;
+    private int tournament;
+
+    public SinglesCreateDTO(String score) {
+        super(score);
+    }
 
     public SinglesCreateDTO(String score, int winner, int loser, int tournament) {
         super(score);
@@ -21,11 +25,23 @@ public class SinglesCreateDTO extends MatchCreateDTO {
         return winner;
     }
 
+    public void setWinner(int winner) {
+        this.winner = winner;
+    }
+
     public int getLoser() {
         return loser;
     }
 
+    public void setLoser(int loser) {
+        this.loser = loser;
+    }
+
     public int getTournament() {
         return tournament;
+    }
+
+    public void setTournament(int tournament) {
+        this.tournament = tournament;
     }
 }

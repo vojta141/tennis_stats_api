@@ -1,7 +1,10 @@
 package Application.Database.DTO;
 
 public class ClubCreateDTO {
-    private final String name;
+    private String name;
+
+    public ClubCreateDTO() {
+    }
 
     public ClubCreateDTO(String name) {
         this.name = name;
@@ -9,5 +12,9 @@ public class ClubCreateDTO {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

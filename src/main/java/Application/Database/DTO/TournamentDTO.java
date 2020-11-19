@@ -57,10 +57,6 @@ public class TournamentDTO {
         return category;
     }
 
-    public int getClub() {
-        return club;
-    }
-
     public List<Integer> getSinglesIDs() {
         return singlesIDs;
     }

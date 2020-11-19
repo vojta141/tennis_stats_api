@@ -12,6 +12,9 @@ public class MatchDTO {
 
     private String score;
 
+    public MatchDTO() {
+    }
+
     public MatchDTO(int id, String score) {
         this.id = id;
         this.score = score;
@@ -21,7 +24,15 @@ public class MatchDTO {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getScore() {
         return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

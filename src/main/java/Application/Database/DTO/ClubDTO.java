@@ -1,8 +1,8 @@
 package Application.Database.DTO;
 
 public class ClubDTO {
-    private final int id;
-    private final String name;
+    private int id;
+    private String name;
 
     public ClubDTO(int id, String name) {
         this.id = id;
