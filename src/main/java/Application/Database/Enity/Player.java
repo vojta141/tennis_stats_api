@@ -22,7 +22,7 @@ public class Player {
     private int bigPoints;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "club_id")
     private Club club;
 
@@ -44,6 +44,16 @@ public class Player {
         this.birthDate = birthDate;
         this.bigPoints = bigPoints;
         this.club = club;
+    }
+
+    public Player(int id, String name, Date birthDate, int bigPoints, Club club,
+                  Set<Tournament> tournaments) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.bigPoints = bigPoints;
+        this.club = club;
+        this.tournaments = tournaments;
     }
 
     public int getId() {
@@ -84,5 +94,13 @@ public class Player {
 
     public void setClub(Club club) {
         this.club = club;
+    }
+
+    public Set<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(Set<Tournament> tournaments) {
+        this.tournaments = tournaments;
     }
 }
