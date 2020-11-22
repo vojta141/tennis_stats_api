@@ -1,8 +1,8 @@
 package Application.Database.Enity;
 
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -15,6 +15,7 @@ public class Club {
 
     @NotNull
     private String name;
+
 
     public Club() {
 

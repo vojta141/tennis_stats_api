@@ -1,8 +1,9 @@
 package Application.Database.Enity;
 
-import com.sun.istack.NotNull;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public class Match {

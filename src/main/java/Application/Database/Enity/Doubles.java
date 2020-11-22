@@ -1,10 +1,13 @@
 package Application.Database.Enity;
 
-import com.sun.istack.NotNull;
+import Application.Database.DTO.DoublesCreateDTO;
 
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Doubles extends Match {

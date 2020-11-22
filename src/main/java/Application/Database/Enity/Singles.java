@@ -1,8 +1,8 @@
 package Application.Database.Enity;
 
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Singles extends Match{
