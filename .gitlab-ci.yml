@@ -7,8 +7,4 @@ build image:
   services:
     - docker:dind
   script:
-    - apk add --no-cache docker-compose
-    - docker volume create --name=postgres_data
-    - docker-compose up -d
     - docker build .
-    - docker-compose down
