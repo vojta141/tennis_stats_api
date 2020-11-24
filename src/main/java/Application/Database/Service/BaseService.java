@@ -2,6 +2,7 @@ package Application.Database.Service;
 
 import Application.Database.Enity.*;
 import Application.Database.Repository.*;
+import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,10 @@ public class BaseService implements BaseServiceInterface {
         this.tournamentRepository = tournamentRepository;
     }
 
-    public <E> E getIfExists(int id, JpaRepository<E,Integer> repository) throws Exception{
+    public <E> E getIfExists(int id, JpaRepository<E,Integer> repository) throws InstanceNotFoundException{
         Optional<E> e = repository.findById(id);
         if(e.isEmpty())
-            throw new Exception("id: " + id + " does not exist");
+            throw new InstanceNotFoundException();
         return e.get();
     }
 }
