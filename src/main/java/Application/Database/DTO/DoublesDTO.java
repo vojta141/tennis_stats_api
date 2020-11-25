@@ -47,4 +47,24 @@ public class DoublesDTO extends MatchDTO{
     public int getTournamentId() {
         return tournamentId;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == this)
+            return true;
+        if(!(o instanceof DoublesDTO))
+            return false;
+        else{
+            DoublesDTO DTO = (DoublesDTO) o;
+            if(this.getId() == DTO.getId() &&
+                    this.getScore().equals(DTO.getScore()) &&
+                    this.loser1Id == DTO.loser1Id &&
+                    this.loser2Id == DTO.loser2Id &&
+                    this.winner1Id == DTO.winner1Id &&
+                    this.winner2Id == DTO.winner2Id &&
+                    this.tournamentId == DTO.tournamentId)
+                return true;
+        }
+        return false;
+    }
 }

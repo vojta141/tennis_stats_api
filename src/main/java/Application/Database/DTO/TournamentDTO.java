@@ -1,14 +1,8 @@
 package Application.Database.DTO;
 
-import Application.Database.Enity.Club;
-import Application.Database.Enity.Doubles;
-import Application.Database.Enity.Player;
-import Application.Database.Enity.Singles;
-import com.sun.istack.NotNull;
-
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class TournamentDTO {
 
@@ -20,22 +14,21 @@ public class TournamentDTO {
 
     private final String category;
 
-    private final int club;
+    private final int clubId;
 
-    private final List<Integer> singlesIDs;
+    private final Set<Integer> singlesIDs;
 
-    private final List<Integer> doublesIDs;
+    private final Set<Integer> doublesIDs;
 
-    private final List<Integer> playerIDs;
+    private final Set<Integer> playerIDs;
 
-    public TournamentDTO(int id, Date date, String name, String category, int club,
-                         List<Integer> singlesIDs, List<Integer> doublesIDs,
-                         List<Integer> playerIDs) {
+    public TournamentDTO(int id, Date date, String name, String category, int clubId,
+                         Set<Integer> singlesIDs, Set<Integer> doublesIDs, Set<Integer> playerIDs) {
         this.id = id;
         this.date = date;
         this.name = name;
         this.category = category;
-        this.club = club;
+        this.clubId = clubId;
         this.singlesIDs = singlesIDs;
         this.doublesIDs = doublesIDs;
         this.playerIDs = playerIDs;
@@ -57,15 +50,42 @@ public class TournamentDTO {
         return category;
     }
 
-    public List<Integer> getSinglesIDs() {
+    public int getClubId() {
+        return clubId;
+    }
+
+    public Set<Integer> getSinglesIDs() {
         return singlesIDs;
     }
 
-    public List<Integer> getDoublesIDs() {
+    public Set<Integer> getDoublesIDs() {
         return doublesIDs;
     }
 
-    public List<Integer> getPlayerIDs() {
+    public Set<Integer> getPlayerIDs() {
         return playerIDs;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == this)
+            return true;
+        if(!(o instanceof SinglesDTO))
+            return false;
+        else{
+            TournamentDTO DTO = (TournamentDTO) o;
+            if(this.id == DTO.id &&
+                    this.name.equals(DTO.name) &&
+                    this.date.equals(DTO.date) &&
+                    this.category.equals(DTO.category) &&
+                    this.singlesIDs.size() == DTO.singlesIDs.size() &&
+                    this.singlesIDs.containsAll(DTO.singlesIDs) &&
+                    this.doublesIDs.size() == DTO.doublesIDs.size() &&
+                    this.doublesIDs.containsAll(DTO.doublesIDs) &&
+                    this.playerIDs.size() == DTO.playerIDs.size() &&
+                    this.playerIDs.containsAll(DTO.playerIDs))
+                return true;
+        }
+        return false;
     }
 }

@@ -24,7 +24,7 @@ public class ClubDTO {
         else{
             ClubDTO clubDTO = (ClubDTO) o;
             if(this.id == clubDTO.id &&
-                this.name == clubDTO.name)
+                this.name.equals(clubDTO.name))
                 return true;
         }
         return false;
