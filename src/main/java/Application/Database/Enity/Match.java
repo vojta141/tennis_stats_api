@@ -6,11 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
-public class Match {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+public class Match extends BaseEntity {
     @NotNull
     private String score;
 
@@ -20,14 +16,6 @@ public class Match {
 
     public Match(String score) {
         this.score = score;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getScore() {

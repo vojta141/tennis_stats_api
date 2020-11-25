@@ -6,11 +6,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-public class Player {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Player extends BaseEntity{
 
     @NotNull
     private String name;
@@ -45,20 +41,6 @@ public class Player {
         this.club = club;
     }
 
-    public Player(int id, String name, Date birthDate, int bigPoints, Club club,
-                  Set<Tournament> tournaments) {
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.bigPoints = bigPoints;
-        this.club = club;
-        this.tournaments = tournaments;
-    }
-
-    public int getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -81,10 +63,6 @@ public class Player {
 
     public void setBigPoints(int bigPoints) {
         this.bigPoints = bigPoints;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Club getClub() {

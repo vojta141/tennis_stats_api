@@ -6,16 +6,10 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-public class Club {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Club extends BaseEntity{
 
     @NotNull
     private String name;
-
 
     public Club() {
 
@@ -23,14 +17,6 @@ public class Club {
 
     public Club(String name) {
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

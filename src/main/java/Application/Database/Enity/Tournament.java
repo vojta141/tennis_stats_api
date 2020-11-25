@@ -7,11 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Tournament {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Tournament extends BaseEntity{
 
     @NotNull
     private Date date;
@@ -49,14 +45,6 @@ public class Tournament {
         this.name = name;
         this.category = category;
         this.club = club;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Date getDate() {
