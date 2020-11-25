@@ -4,27 +4,20 @@ import Application.Database.DTO.ClubCreateDTO;
 import Application.Database.DTO.ClubDTO;
 import Application.Database.Enity.Club;
 import Application.Database.Repository.ClubRepository;
-import Application.Exceptions.InstanceNotFoundException;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 class ClubServiceTest extends ServiceTest{
@@ -36,13 +29,18 @@ class ClubServiceTest extends ServiceTest{
     private ClubRepository clubRepository;
 
     @Test
-    void findByIdI(){
+    void findById(){
         Club club = new Club("Tenis club");
         findByIdTest(club, clubRepository, clubService);
     }
 
     @Test
-    void findByIdAsDTOTestImpl(){
+    void failFindByIdAsDTO(){
+        failFindByIdAsDTOTest(clubService);
+    }
+
+    @Test
+    void findByIdAsDTO(){
         Club club = new Club("Tennis");
         ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
         findByIdAsDTOTest(club, clubDTO, clubRepository, clubService);

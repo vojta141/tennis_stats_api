@@ -4,15 +4,21 @@ import Application.Database.Enity.BaseEntity;
 import Application.Database.Enity.Club;
 import Application.Exceptions.InstanceNotFoundException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestComponent;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +26,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 
 public class ServiceTest {
+
     public <E , CDTO, DTO> void findByIdTest(E entity, JpaRepository<E, Integer> repository,
                                              ServiceInterface<E, CDTO, DTO, Integer> service){
         if(entity instanceof BaseEntity) {
@@ -59,19 +66,25 @@ public class ServiceTest {
 
     public <E, CDTO, DTO> void createTest(E entity, DTO dto, CDTO cdto, JpaRepository<E, Integer> repository,
                                           ServiceInterface<E, CDTO, DTO, Integer> service){
-        BDDMockito.when(repository.save(any())).thenAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                return invocation.getArguments()[0];
+        if(service instanceof BaseService) {
+            BDDMockito.when(repository.save(any())).thenAnswer(new Answer() {
+                @Override
+                public Object answer(InvocationOnMock invocation) throws Throwable {
+                    return invocation.getArguments()[0];
+                }
+            });
+            try {
+                DTO tmp = service.create(cdto);
+                Assertions.assertEquals(dto, service.create(cdto));
+            } catch (InstanceNotFoundException e) {
+                e.printStackTrace();
+                Assertions.fail("Instance not found");
             }
-        });
-        try {
-            Assertions.assertEquals(dto, service.create(cdto));
-        } catch (InstanceNotFoundException e) {
-            e.printStackTrace();
-            Assertions.fail("Instance not found");
+            Mockito.verify(repository, Mockito.atLeastOnce()).save(any());
         }
-        Mockito.verify(repository, Mockito.atLeastOnce()).save(any());
+        else{
+            Assertions.fail("Incorrect entity passed, all entities have to be derived from BaseEntity");
+        }
     }
 
     public <E, CDTO, DTO> void updateTest(E entity, DTO dto, CDTO cdto, JpaRepository<E, Integer> repository,
@@ -79,6 +92,7 @@ public class ServiceTest {
         if(entity instanceof BaseEntity) {
             BDDMockito.given(repository.findById(((BaseEntity) entity).getId())).willReturn(Optional.of(entity));
             try {
+                DTO tmp = service.update(((BaseEntity) entity).getId(), cdto);
                 Assertions.assertEquals(dto, service.update(((BaseEntity) entity).getId(), cdto));
             } catch (InstanceNotFoundException e) {
                 e.printStackTrace();
@@ -89,5 +103,24 @@ public class ServiceTest {
         else{
             Assertions.fail("Incorrect entity passed, all entities have to be derived from BaseEntity");
         }
+    }
+
+    public <E, CDTO, DTO> void updateTestFail(E entity, DTO dto, CDTO cdto, JpaRepository<E, Integer> repository,
+                                          ServiceInterface<E, CDTO, DTO, Integer> service){
+        if(entity instanceof BaseEntity) {
+            BDDMockito.given(repository.findById(((BaseEntity) entity).getId())).willReturn(Optional.of(entity));
+            try {
+                DTO tmp = service.update(((BaseEntity) entity).getId(), cdto);
+            } catch (InstanceNotFoundException e) {
+                return;
+            }
+            Assertions.fail();
+        }
+    }
+
+    public <E, DTO, CDTO> void failFindByIdAsDTOTest(ServiceInterface<E, CDTO, DTO, Integer> service){
+        Optional<DTO> dto = service.findByIdAsDTO(1);
+        if(dto.isPresent())
+            Assertions.fail();
     }
 }
