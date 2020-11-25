@@ -27,7 +27,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
-class ClubServiceTest {
+class ClubServiceTest extends ServiceTest{
 
     @Autowired
     private ClubService clubService;
@@ -36,29 +36,20 @@ class ClubServiceTest {
     private ClubRepository clubRepository;
 
     @Test
-    void findById() {
+    void findByIdI(){
         Club club = new Club("Tenis club");
-        BDDMockito.given(clubRepository.findById(club.getId())).willReturn(Optional.of(club));
-        Assertions.assertEquals(Optional.of(club), clubService.findById(club.getId()));
-        Mockito.verify(clubRepository, Mockito.atLeastOnce()).findById(club.getId());
+        findByIdTest(club, clubRepository, clubService);
     }
 
     @Test
-    void findByIdAsDTO() {
+    void findByIdAsDTOTestImpl(){
         Club club = new Club("Tennis");
         ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
-        BDDMockito.given(clubRepository.findById(club.getId())).willReturn(Optional.of(club));
-        //Club clubDTO2 = clubService.findByIdAsDTO(club.getId());
-        Optional<ClubDTO> clubDTO2 = clubService.findByIdAsDTO(club.getId());
-        if(clubDTO2.isPresent())
-            Assertions.assertEquals(clubDTO, clubDTO2.get());
-        Mockito.verify(clubRepository, Mockito.atLeastOnce()).findById(club.getId());
-
-
+        findByIdAsDTOTest(club, clubDTO, clubRepository, clubService);
     }
 
     @Test
-    void findByName() {
+    void findByNameTest() {
         Club club = new Club("Tenis club");
         BDDMockito.given(clubRepository.findByName(club.getName())).willReturn(Optional.of(club));
         Assertions.assertEquals(Optional.of(club), clubService.findByName(club.getName()));
@@ -66,7 +57,7 @@ class ClubServiceTest {
     }
 
     @Test
-    void findAll() {
+    void findAll(){
         List<Club> clubs = new ArrayList<>();
         List<ClubDTO> clubDTOs = new ArrayList<>();
         for(int i = 0; i < 10; i++){
@@ -74,40 +65,22 @@ class ClubServiceTest {
             clubs.add(tmp);
             clubDTOs.add(new ClubDTO(tmp.getId(), tmp.getName()));
         }
-        PageRequest pageRequest = PageRequest.of(0,10);
-        PageImpl<Club> page = new PageImpl<>(clubs);
-        BDDMockito.given(clubRepository.findAll(pageRequest)).willReturn(page);
-        Assertions.assertArrayEquals(clubDTOs.toArray(), clubService.findAll(pageRequest).stream().toArray());
-        Mockito.verify(clubRepository, Mockito.atLeastOnce()).findAll(pageRequest);
+        findAllTest(clubs, clubDTOs, clubRepository, clubService);
     }
 
     @Test
-    void create() {
+    void create(){
         Club club = new Club("Tenis");
         ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
         ClubCreateDTO clubSrc = new ClubCreateDTO(club.getName());
-        BDDMockito.when(clubRepository.save(any(Club.class))).thenAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                return invocation.getArguments()[0];
-            }
-        });
-        Assertions.assertEquals(clubDTO, clubService.create(clubSrc));
-        Mockito.verify(clubRepository, Mockito.atLeastOnce()).save(any(Club.class));
+        createTest(club, clubDTO, clubSrc, clubRepository, clubService);
     }
 
-    @Test
-    void update() {
-        Club club = new Club("Tenis");
-        ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
-        ClubCreateDTO clubSrc = new ClubCreateDTO(club.getName());
-        BDDMockito.given(clubRepository.findById(club.getId())).willReturn(Optional.of(club));
-        try {
-            Assertions.assertEquals(clubDTO, clubService.update(club.getId(), clubSrc));
-        } catch (InstanceNotFoundException e) {
-            e.printStackTrace();
-            Assertions.fail();
-        }
-        Mockito.verify(clubRepository, Mockito.atLeastOnce()).findById(club.getId());
-    }
+     @Test
+    void update(){
+         Club club = new Club("Tenis");
+         ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
+         ClubCreateDTO clubSrc = new ClubCreateDTO(club.getName());
+         updateTest(club, clubDTO, clubSrc, clubRepository, clubService);
+     }
 }
