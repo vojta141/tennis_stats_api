@@ -103,11 +103,17 @@ public class TournamentService extends BaseService implements TournamentServiceI
     }
 
     private TournamentDTO toDTO(Tournament tournament){
+        Set<Integer> singles = null;
+        if(tournament.getSingles() != null)
+            singles = tournament.getSingles().stream().map(BaseEntity::getId).collect(Collectors.toSet());
+        Set<Integer> doubles = null;
+        if(tournament.getDoubles() != null)
+            doubles = tournament.getDoubles().stream().map(BaseEntity::getId).collect(Collectors.toSet());
+        Set<Integer> players = null;
+        if(tournament.getPlayers() != null)
+            players = tournament.getPlayers().stream().map(BaseEntity::getId).collect(Collectors.toSet());
         return new TournamentDTO(tournament.getId(), tournament.getDate(), tournament.getName(),
-                tournament.getCategory(), tournament.getClub().getId(),
-                tournament.getSingles().stream().map(Match::getId).collect(Collectors.toSet()),
-                tournament.getDoubles().stream().map(Match::getId).collect(Collectors.toSet()),
-                tournament.getPlayers().stream().map(Player::getId).collect(Collectors.toSet()));
+                tournament.getCategory(), tournament.getClub().getId(), singles, doubles, players);
     }
 
     private Optional<TournamentDTO> toDTO(Optional<Tournament> tournament){
