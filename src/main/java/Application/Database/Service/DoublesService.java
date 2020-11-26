@@ -38,8 +38,17 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
     }
 
     @Override
+    public List<Doubles> findByLoserId(int loserID){
+        return doublesRepository.findByLoser(loserID);
+    }
+
+    @Override
     public List<DoublesDTO> findByWinnerIdAsDTO(int winnerID){
         return findByWinnerId(winnerID).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+    @Override
+    public List<DoublesDTO> findByLoserIdAsDTO(int loserID){
+        return findByLoserId(loserID).stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     @Override

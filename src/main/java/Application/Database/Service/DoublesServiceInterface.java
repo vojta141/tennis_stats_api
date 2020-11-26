@@ -12,4 +12,8 @@ public interface DoublesServiceInterface extends ServiceInterface<Doubles, Doubl
     List<Doubles> findByWinnerId(int winnerID);
 
     List<DoublesDTO> findByWinnerIdAsDTO(int winnerID);
+
+    List<Doubles> findByLoserId(int winnerID);
+
+    List<DoublesDTO> findByLoserIdAsDTO(int winnerID);
 }

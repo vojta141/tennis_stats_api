@@ -155,6 +155,22 @@ class DoublesServiceTest extends ServiceTest{
     }
 
     @Test
+    void findByLoserId() {
+        List<Doubles> doublesList = Collections.singletonList(doubles);
+        BDDMockito.given(doublesRepository.findByLoser(doubles.getLoser1().getId())).willReturn(Arrays.asList(doubles));
+        Assertions.assertEquals(doublesList, doublesService.findByLoserId(doubles.getLoser1().getId()));
+        Mockito.verify(doublesRepository, Mockito.atLeastOnce()).findByLoser(doubles.getLoser1().getId());
+    }
+
+    @Test
+    void findByLoserIdAsDTO() {
+        List<DoublesDTO> doublesList = Collections.singletonList(doublesDTO);
+        BDDMockito.given(doublesRepository.findByLoser(doubles.getLoser1().getId())).willReturn(Arrays.asList(doubles));
+        Assertions.assertEquals(doublesList, doublesService.findByLoserIdAsDTO(doubles.getLoser1().getId()));
+        Mockito.verify(doublesRepository, Mockito.atLeastOnce()).findByLoser(doubles.getLoser1().getId());
+    }
+
+    @Test
     void remove(){
         removeTest(doubles, doublesRepository, doublesService);
     }

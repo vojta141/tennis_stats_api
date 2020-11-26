@@ -21,6 +21,5 @@ public interface DoublesRepository extends JpaRepository<Doubles, Integer> {
     @Query(
         "from Doubles as doubles where doubles.loser1 = :id or doubles.loser2 = :id"
     )
-    Optional<Doubles> findByLoser(Integer id);
-
+    List<Doubles> findByLoser(Integer id);
 }
