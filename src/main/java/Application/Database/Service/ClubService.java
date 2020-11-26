@@ -3,6 +3,7 @@ package Application.Database.Service;
 import Application.Database.DTO.ClubCreateDTO;
 import Application.Database.DTO.ClubDTO;
 import Application.Database.Enity.Club;
+import Application.Database.Enity.Player;
 import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -53,6 +54,12 @@ public class ClubService extends BaseService implements ClubServiceInterface {
         Club club = getIfExists(id, clubRepository);
         club.setName(clubSrc.getName());
         return toDTO(club);
+    }
+
+    @Override
+    public void remove(Integer id) throws InstanceNotFoundException {
+        Club club = getIfExists(id, clubRepository);
+        clubRepository.delete(club);
     }
 
     private ClubDTO toDTO(Club club){

@@ -70,6 +70,12 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
         return toDTO(doubles);
     }
 
+    @Override
+    public void remove(Integer id) throws InstanceNotFoundException {
+        Doubles doubles = getIfExists(id, doublesRepository);
+        doublesRepository.delete(doubles);
+    }
+
     private DoublesDTO toDTO(Doubles doubles){
         return new DoublesDTO(doubles.getId(), doubles.getScore(), doubles.getWinner1().getId(),
                 doubles.getWinner2().getId(), doubles.getLoser1().getId(), doubles.getLoser2().getId(), doubles.getTournament().getId());

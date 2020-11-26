@@ -81,4 +81,10 @@ class ClubServiceTest extends ServiceTest{
          ClubCreateDTO clubSrc = new ClubCreateDTO(club.getName());
          updateTest(club, clubDTO, clubSrc, clubRepository, clubService);
      }
+
+    @Test
+    void remove(){
+        Club club = new Club("Tenis");
+        removeTest(club, clubRepository, clubService);
+    }
 }

@@ -123,4 +123,24 @@ public class ServiceTest {
         if(dto.isPresent())
             Assertions.fail();
     }
+
+    public <E, CDTO, DTO> void removeTest(E entity, JpaRepository<E, Integer> repository,
+                                          ServiceInterface<E, CDTO, DTO, Integer> service){
+        if(entity instanceof BaseEntity) {
+            BDDMockito.given(repository.findById(((BaseEntity) entity).getId())).willReturn(Optional.of(entity));
+            try {
+                service.remove(((BaseEntity) entity).getId());
+            } catch (InstanceNotFoundException e) {
+                e.printStackTrace();
+                Assertions.fail("Entity with given ID not found");
+            }
+            BDDMockito.verify(repository, Mockito.atLeastOnce()).findById(((BaseEntity) entity).getId());
+            BDDMockito.verify(repository, Mockito.atLeastOnce()).delete(entity);
+        }
+        else {
+            Assertions.fail("Incorrect entity passed, all entities have to be derived from BaseEntity");
+        }
+    }
+
+
 }

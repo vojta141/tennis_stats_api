@@ -31,9 +31,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DoublesServiceTest extends ServiceTest{
 
-
-
-
     @Autowired
     private DoublesService doublesService;
 
@@ -143,7 +140,7 @@ class DoublesServiceTest extends ServiceTest{
 
     @Test
     void findByWinnerId() {
-        List<Doubles> doublesList = Arrays.asList(doubles);
+        List<Doubles> doublesList = Collections.singletonList(doubles);
         BDDMockito.given(doublesRepository.findByWinner(doubles.getWinner1().getId())).willReturn(Arrays.asList(doubles));
         Assertions.assertEquals(doublesList, doublesService.findByWinnerId(doubles.getWinner1().getId()));
         Mockito.verify(doublesRepository, Mockito.atLeastOnce()).findByWinner(doubles.getWinner1().getId());
@@ -151,10 +148,15 @@ class DoublesServiceTest extends ServiceTest{
 
     @Test
     void findByWinnerIdAsDTO() {
-        List<DoublesDTO> doublesList = Arrays.asList(doublesDTO);
+        List<DoublesDTO> doublesList = Collections.singletonList(doublesDTO);
         BDDMockito.given(doublesRepository.findByWinner(doubles.getWinner1().getId())).willReturn(Arrays.asList(doubles));
         Assertions.assertEquals(doublesList, doublesService.findByWinnerIdAsDTO(doubles.getWinner1().getId()));
         Mockito.verify(doublesRepository, Mockito.atLeastOnce()).findByWinner(doubles.getWinner1().getId());
+    }
+
+    @Test
+    void remove(){
+        removeTest(doubles, doublesRepository, doublesService);
     }
 
 }
