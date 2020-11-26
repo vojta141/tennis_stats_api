@@ -28,17 +28,12 @@ public class Player extends BaseEntity{
 
     }
 
-    public Player(String name, Date birthDate, Club club) {
-        this.name = name;
-        this.birthDate = birthDate;
-        this.club = club;
-    }
-
-    public Player(String name, Date birthDate, int bigPoints, Club club) {
+    public Player(@NotNull String name, @NotNull Date birthDate, int bigPoints, @NotNull Club club, Set<Tournament> tournaments) {
         this.name = name;
         this.birthDate = birthDate;
         this.bigPoints = bigPoints;
         this.club = club;
+        this.tournaments = tournaments;
     }
 
     public String getName() {
