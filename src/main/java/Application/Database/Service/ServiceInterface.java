@@ -19,4 +19,6 @@ public interface ServiceInterface<E, CDTO, DTO, KEY> {
 
     DTO update(KEY id, CDTO c) throws InstanceNotFoundException;
 
+    void remove(KEY id) throws InstanceNotFoundException;
+
 }
