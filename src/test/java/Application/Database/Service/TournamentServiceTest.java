@@ -119,7 +119,11 @@ public class TournamentServiceTest extends ServiceTest{
         tournament.setDoubles(null);
         tournament.setSingles(null);
         tournament.setPlayers(null);
-        createTest(tournament, tournamentDTO, tournamentCreateDTO, tournamentRepository, tournamentService);
+        TournamentDTO dto = new TournamentDTO(tournament.getId(), tournament.getDate(), tournament.getName(),
+                tournament.getCategory(), tournament.getClub().getId(), null, null, null);
+        TournamentCreateDTO cdto = new TournamentCreateDTO(tournament.getDate(), tournament.getName(),
+                tournament.getCategory(), tournament.getClub().getId(), null, null, null);
+        createTest(tournament, dto, cdto, tournamentRepository, tournamentService);
     }
 
     @Test
@@ -139,7 +143,11 @@ public class TournamentServiceTest extends ServiceTest{
         tournament.setDoubles(null);
         tournament.setSingles(null);
         tournament.setPlayers(null);
-        updateTest(tournament, tournamentDTO, tournamentCreateDTO, tournamentRepository, tournamentService);
+        TournamentDTO dto = new TournamentDTO(tournament.getId(), tournament.getDate(), tournament.getName(),
+                tournament.getCategory(), tournament.getClub().getId(), null, null, null);
+        TournamentCreateDTO cdto = new TournamentCreateDTO(tournament.getDate(), tournament.getName(),
+                tournament.getCategory(), tournament.getClub().getId(), null, null, null);
+        updateTest(tournament, dto, cdto, tournamentRepository, tournamentService);
     }
 
     @Test
