@@ -1,9 +1,7 @@
 package Application.Database.DTO;
 
-import Application.Database.Enity.Club;
-
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public class TournamentCreateDTO {
 
@@ -15,18 +13,18 @@ public class TournamentCreateDTO {
 
     private int club;
 
-    private List<Integer> singlesIDs;
+    private Set<Integer> singlesIDs;
 
-    private List<Integer> doublesIDs;
+    private Set<Integer> doublesIDs;
 
-    private List<Integer> playerIDs;
+    private Set<Integer> playerIDs;
 
     public TournamentCreateDTO() {
     }
 
     public TournamentCreateDTO(Date date, String name, String category, int club,
-                               List<Integer> singlesIDs, List<Integer> doublesIDs,
-                               List<Integer> playerIDs) {
+                               Set<Integer> singlesIDs, Set<Integer> doublesIDs,
+                               Set<Integer> playerIDs) {
         this.date = date;
         this.name = name;
         this.category = category;
@@ -68,27 +66,27 @@ public class TournamentCreateDTO {
         this.club = club;
     }
 
-    public List<Integer> getSinglesIDs() {
+    public Set<Integer> getSinglesIDs() {
         return singlesIDs;
     }
 
-    public void setSinglesIDs(List<Integer> singlesIDs) {
+    public void setSinglesIDs(Set<Integer> singlesIDs) {
         this.singlesIDs = singlesIDs;
     }
 
-    public List<Integer> getDoublesIDs() {
+    public Set<Integer> getDoublesIDs() {
         return doublesIDs;
     }
 
-    public void setDoublesIDs(List<Integer> doublesIDs) {
+    public void setDoublesIDs(Set<Integer> doublesIDs) {
         this.doublesIDs = doublesIDs;
     }
 
-    public List<Integer> getPlayerIDs() {
+    public Set<Integer> getPlayerIDs() {
         return playerIDs;
     }
 
-    public void setPlayerIDs(List<Integer> playerIDs) {
+    public void setPlayerIDs(Set<Integer> playerIDs) {
         this.playerIDs = playerIDs;
     }
 }
