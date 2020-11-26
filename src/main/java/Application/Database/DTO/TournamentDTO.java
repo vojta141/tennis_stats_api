@@ -2,6 +2,7 @@ package Application.Database.DTO;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class TournamentDTO {
@@ -67,25 +68,22 @@ public class TournamentDTO {
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o == this)
-            return true;
-        if(!(o instanceof SinglesDTO))
-            return false;
-        else{
-            TournamentDTO DTO = (TournamentDTO) o;
-            if(this.id == DTO.id &&
-                    this.name.equals(DTO.name) &&
-                    this.date.equals(DTO.date) &&
-                    this.category.equals(DTO.category) &&
-                    this.singlesIDs.size() == DTO.singlesIDs.size() &&
-                    this.singlesIDs.containsAll(DTO.singlesIDs) &&
-                    this.doublesIDs.size() == DTO.doublesIDs.size() &&
-                    this.doublesIDs.containsAll(DTO.doublesIDs) &&
-                    this.playerIDs.size() == DTO.playerIDs.size() &&
-                    this.playerIDs.containsAll(DTO.playerIDs))
-                return true;
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TournamentDTO that = (TournamentDTO) o;
+        return id == that.id &&
+                clubId == that.clubId &&
+                date.equals(that.date) &&
+                name.equals(that.name) &&
+                category.equals(that.category) &&
+                Objects.equals(singlesIDs, that.singlesIDs) &&
+                Objects.equals(doublesIDs, that.doublesIDs) &&
+                Objects.equals(playerIDs, that.playerIDs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, name, category, clubId, singlesIDs, doublesIDs, playerIDs);
     }
 }
