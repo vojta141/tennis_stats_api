@@ -7,6 +7,7 @@ import Application.Database.Repository.ClubRepository;
 import Application.Database.Repository.PlayerRepository;
 import Application.Database.Repository.SinglesRepository;
 import Application.Database.Repository.TournamentRepository;
+import Application.Exceptions.InstanceNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -87,6 +88,18 @@ public class SinglesServiceTest extends ServiceTest{
         BDDMockito.given(playerRepository.findById(singles.getLoser().getId()))
                 .willReturn(Optional.of(singles.getLoser()));
         createTest(singles, singlesDTO, singlesCreateDTO, singlesRepository, singlesService);
+    }
+
+    @Test
+    void createFail(){
+        SinglesCreateDTO cdto = new SinglesCreateDTO(singles.getScore(), singles.getLoser().getId(),
+                singles.getLoser().getId(), singles.getTournament().getId());
+        try {
+            singlesService.create(cdto);
+        } catch (InstanceNotFoundException e) {
+            return;
+        }
+        Assertions.fail();
     }
 
     @Test
