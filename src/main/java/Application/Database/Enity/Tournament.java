@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Tournament extends BaseEntity{
@@ -24,16 +25,16 @@ public class Tournament extends BaseEntity{
     private Club club;
 
     @OneToMany(mappedBy = "tournament")
-    private List<Singles> singles;
+    private Set<Singles> singles;
 
     @OneToMany(mappedBy = "tournament")
-    private List<Doubles> doubles;
+    private Set<Doubles> doubles;
 
     @ManyToMany
     @JoinTable(name = "participation",
                 joinColumns = @JoinColumn(name = "tournament_id"),
                 inverseJoinColumns = @JoinColumn(name = "players_id"))
-    private List<Player> players;
+    private Set<Player> players;
 
     public Tournament()
     {
@@ -45,6 +46,17 @@ public class Tournament extends BaseEntity{
         this.name = name;
         this.category = category;
         this.club = club;
+    }
+
+    public Tournament(@NotNull Date date, @NotNull String name, @NotNull String category, @NotNull Club club,
+                      Set<Singles> singles, Set<Doubles> doubles, Set<Player> players) {
+        this.date = date;
+        this.name = name;
+        this.category = category;
+        this.club = club;
+        this.singles = singles;
+        this.doubles = doubles;
+        this.players = players;
     }
 
     public Date getDate() {
@@ -79,27 +91,27 @@ public class Tournament extends BaseEntity{
         this.club = club;
     }
 
-    public List<Singles> getSingles() {
+    public Set<Singles> getSingles() {
         return singles;
     }
 
-    public void setSingles(List<Singles> singles) {
+    public void setSingles(Set<Singles> singles) {
         this.singles = singles;
     }
 
-    public List<Doubles> getDoubles() {
+    public Set<Doubles> getDoubles() {
         return doubles;
     }
 
-    public void setDoubles(List<Doubles> doubles) {
+    public void setDoubles(Set<Doubles> doubles) {
         this.doubles = doubles;
     }
 
-    public List<Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(Set<Player> players) {
         this.players = players;
     }
 }
