@@ -1,17 +1,14 @@
 package Application.Database.Service;
 
 import Application.Database.DTO.TournamentCreateDTO;
-import Application.Database.DTO.TournamentDTO;
 import Application.Database.Enity.*;
 import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
-import java.util.stream.Collectors;
+
 @Service
 public class TournamentService extends BaseService implements TournamentServiceInterface {
 
@@ -21,14 +18,8 @@ public class TournamentService extends BaseService implements TournamentServiceI
     }
 
     @Override
-    public Optional<TournamentDTO> findByIdAsDTO(Integer id){
-        return toDTO(findById(id));
-    }
-
-    @Override
-    public Page<TournamentDTO> findAll(Pageable pageable) {
-        return new PageImpl<>(tournamentRepository.findAll(pageable).stream()
-                .map(this::toDTO).collect(Collectors.toList()));
+    public Page<Tournament> findAll(Pageable pageable) {
+        return tournamentRepository.findAll(pageable);
     }
 
     @Override
@@ -38,7 +29,7 @@ public class TournamentService extends BaseService implements TournamentServiceI
 
     @Override
     @Transactional
-    public TournamentDTO create(TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
+    public Tournament create(TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
         Club club = getIfExists(tournamentCreateDTO.getClub(), clubRepository);
         Set<Doubles> doubles = null;
         if (tournamentCreateDTO.getDoublesIDs() != null) {
@@ -58,14 +49,14 @@ public class TournamentService extends BaseService implements TournamentServiceI
             for (int id2 : tournamentCreateDTO.getPlayerIDs())
                 players.add(getIfExists(id2, playerRepository));
         }
-        return toDTO(tournamentRepository.save(new Tournament(tournamentCreateDTO.getDate(),
+        return tournamentRepository.save(new Tournament(tournamentCreateDTO.getDate(),
                 tournamentCreateDTO.getName(), tournamentCreateDTO.getCategory(), club, singles,
-                doubles, players)));
+                doubles, players));
     }
 
     @Override
     @Transactional
-    public TournamentDTO update(Integer id, TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
+    public Tournament update(Integer id, TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
         Tournament tournament = getIfExists(id, tournamentRepository);
         Club club = getIfExists(tournamentCreateDTO.getClub(), clubRepository);
         Set<Doubles> doubles = null;
@@ -93,32 +84,12 @@ public class TournamentService extends BaseService implements TournamentServiceI
         tournament.setDoubles(doubles);
         tournament.setSingles(singles);
         tournament.setPlayers(players);
-        return toDTO(tournament);
+        return tournament;
     }
 
     @Override
     public void remove(Integer id) throws InstanceNotFoundException {
         Tournament tournament = getIfExists(id, tournamentRepository);
         tournamentRepository.delete(tournament);
-    }
-
-    private TournamentDTO toDTO(Tournament tournament){
-        Set<Integer> singles = null;
-        if(tournament.getSingles() != null)
-            singles = tournament.getSingles().stream().map(BaseEntity::getId).collect(Collectors.toSet());
-        Set<Integer> doubles = null;
-        if(tournament.getDoubles() != null)
-            doubles = tournament.getDoubles().stream().map(BaseEntity::getId).collect(Collectors.toSet());
-        Set<Integer> players = null;
-        if(tournament.getPlayers() != null)
-            players = tournament.getPlayers().stream().map(BaseEntity::getId).collect(Collectors.toSet());
-        return new TournamentDTO(tournament.getId(), tournament.getDate(), tournament.getName(),
-                tournament.getCategory(), tournament.getClub().getId(), singles, doubles, players);
-    }
-
-    private Optional<TournamentDTO> toDTO(Optional<Tournament> tournament){
-        if(tournament.isEmpty())
-            return Optional.empty();
-        return Optional.of(toDTO(tournament.get()));
     }
 }

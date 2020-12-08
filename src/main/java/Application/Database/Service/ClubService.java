@@ -24,51 +24,35 @@ public class ClubService extends BaseService implements ClubServiceInterface {
     }
 
     @Override
-    public Optional<ClubDTO> findByIdAsDTO(Integer id){
-        return toDTO(findById(id));
-    }
-
-    @Override
     public Optional<Club> findByName(String name)
     {
         return clubRepository.findByName(name);
     }
 
     @Override
-    public Page<ClubDTO> findAll(Pageable pageable){
-        return new PageImpl<>(clubRepository.findAll(pageable).stream()
-                .map(this::toDTO).collect(Collectors.toList()));
+    public Page<Club> findAll(Pageable pageable){
+        return clubRepository.findAll(pageable);
     }
 
     @Override
     @Transactional
-    public ClubDTO create(ClubCreateDTO clubSrc){
+    public Club create(ClubCreateDTO clubSrc){
         Club club = new Club();
         club.setName(clubSrc.getName());
-        return toDTO(clubRepository.save(club));
+        return clubRepository.save(club);
     }
 
     @Override
     @Transactional
-    public ClubDTO update(Integer id, ClubCreateDTO clubSrc) throws InstanceNotFoundException {
+    public Club update(Integer id, ClubCreateDTO clubSrc) throws InstanceNotFoundException {
         Club club = getIfExists(id, clubRepository);
         club.setName(clubSrc.getName());
-        return toDTO(club);
+        return club;
     }
 
     @Override
     public void remove(Integer id) throws InstanceNotFoundException {
         Club club = getIfExists(id, clubRepository);
         clubRepository.delete(club);
-    }
-
-    private ClubDTO toDTO(Club club){
-        return new ClubDTO(club.getId(), club.getName());
-    }
-
-    private Optional<ClubDTO> toDTO(Optional<Club> club){
-        if(club.isEmpty())
-            return Optional.empty();
-        return Optional.of(toDTO(club.get()));
     }
 }

@@ -11,13 +11,11 @@ public interface ServiceInterface<E, CDTO, DTO, KEY> {
 
     Optional<E> findById(KEY id);
 
-    Optional<DTO> findByIdAsDTO(KEY id);
+    Page<E> findAll(Pageable pageable);
 
-    Page<DTO> findAll(Pageable pageable);
+    E create(CDTO c) throws InstanceNotFoundException;
 
-    DTO create(CDTO c) throws InstanceNotFoundException;
-
-    DTO update(KEY id, CDTO c) throws InstanceNotFoundException;
+    E update(KEY id, CDTO c) throws InstanceNotFoundException;
 
     void remove(KEY id) throws InstanceNotFoundException;
 

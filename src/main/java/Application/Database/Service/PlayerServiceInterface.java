@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface PlayerServiceInterface extends ServiceInterface<Player, PlayerCreateDTO, PlayerDTO, Integer> {
     List<Player> findAllByClubId(int clubId);
-
-    List<PlayerDTO> findAllByClubIdAsDTO(int clubId);
 }

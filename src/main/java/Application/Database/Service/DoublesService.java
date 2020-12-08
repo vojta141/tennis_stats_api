@@ -18,18 +18,13 @@ import java.util.stream.Collectors;
 @Service
 public class DoublesService extends BaseService implements DoublesServiceInterface {
 
-    public Page<DoublesDTO> findAll(Pageable pageable){
-        return new PageImpl<>(doublesRepository.findAll(pageable).stream().map(this::toDTO).collect(Collectors.toList()));
+    public Page<Doubles> findAll(Pageable pageable){
+        return doublesRepository.findAll(pageable);
     }
 
     @Override
     public Optional<Doubles> findById(Integer id){
         return this.doublesRepository.findById(id);
-    }
-
-    @Override
-    public Optional<DoublesDTO> findByIdAsDTO(Integer id){
-        return toDTO(findById(id));
     }
 
     @Override
@@ -43,28 +38,19 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
     }
 
     @Override
-    public List<DoublesDTO> findByWinnerIdAsDTO(int winnerID){
-        return findByWinnerId(winnerID).stream().map(this::toDTO).collect(Collectors.toList());
-    }
-    @Override
-    public List<DoublesDTO> findByLoserIdAsDTO(int loserID){
-        return findByLoserId(loserID).stream().map(this::toDTO).collect(Collectors.toList());
-    }
-
-    @Override
     @Transactional
-    public DoublesDTO create(DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{
+    public Doubles create(DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{
         Map<String, List<Player> > players = validateAndRetrievePlayers(doublesCreateDTO);
         List<Player> winners = players.get("winners");
         List<Player> losers = players.get("losers");
         Tournament tournament = getIfExists(doublesCreateDTO.getTournament(), tournamentRepository);
         Doubles doubles = new Doubles(doublesCreateDTO.getScore(), winners.get(0), winners.get(1), losers.get(0), losers.get(1), tournament);
-        return toDTO(doublesRepository.save(doubles));
+        return doublesRepository.save(doubles);
     }
 
     @Override
     @Transactional
-    public DoublesDTO update(Integer id, DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{
+    public Doubles update(Integer id, DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{
         Doubles doubles = getIfExists(id, doublesRepository);
         Map<String, List<Player> > players = validateAndRetrievePlayers(doublesCreateDTO);
         List<Player> winners = players.get("winners");
@@ -76,24 +62,13 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
         doubles.setWinner2(winners.get(1));
         doubles.setTournament(tournament);
         doubles.setScore(doublesCreateDTO.getScore());
-        return toDTO(doubles);
+        return doubles;
     }
 
     @Override
     public void remove(Integer id) throws InstanceNotFoundException {
         Doubles doubles = getIfExists(id, doublesRepository);
         doublesRepository.delete(doubles);
-    }
-
-    private DoublesDTO toDTO(Doubles doubles){
-        return new DoublesDTO(doubles.getId(), doubles.getScore(), doubles.getWinner1().getId(),
-                doubles.getWinner2().getId(), doubles.getLoser1().getId(), doubles.getLoser2().getId(), doubles.getTournament().getId());
-    }
-
-    private Optional<DoublesDTO> toDTO(Optional<Doubles> doubles){
-        if(doubles.isEmpty())
-            return Optional.empty();
-        return Optional.of(toDTO(doubles.get()));
     }
 
     private Map<String, List<Player>> validateAndRetrievePlayers(DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{
