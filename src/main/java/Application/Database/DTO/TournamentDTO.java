@@ -1,11 +1,13 @@
 package Application.Database.DTO;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class TournamentDTO {
+public class TournamentDTO extends RepresentationModel<TournamentDTO> {
 
     private final int id;
 

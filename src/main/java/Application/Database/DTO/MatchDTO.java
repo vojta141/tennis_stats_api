@@ -1,12 +1,13 @@
 package Application.Database.DTO;
 
 import com.sun.istack.NotNull;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-public class MatchDTO {
+public class MatchDTO extends RepresentationModel<MatchDTO> {
 
     private int id;
 

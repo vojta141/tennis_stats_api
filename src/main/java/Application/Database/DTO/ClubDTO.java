@@ -1,8 +1,9 @@
 package Application.Database.DTO;
 
 import Application.Database.Enity.Club;
+import org.springframework.hateoas.RepresentationModel;
 
-public class ClubDTO {
+public class ClubDTO extends RepresentationModel<ClubDTO> {
     private int id;
     private String name;
 

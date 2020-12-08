@@ -4,12 +4,13 @@ import Application.Database.Enity.Club;
 import Application.Database.Enity.Player;
 import Application.Database.Enity.Tournament;
 import com.sun.istack.NotNull;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-public class PlayerDTO {
+public class PlayerDTO extends RepresentationModel<PlayerDTO>{
 
     private final int id;
 
