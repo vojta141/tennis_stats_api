@@ -84,16 +84,6 @@ public class TournamentServiceTest extends ServiceTest{
     }
 
     @Test
-    void findByIdAsDTO(){
-        findByIdAsDTOTest(tournament, tournamentDTO, tournamentRepository, tournamentService);
-    }
-
-    @Test
-    void failFindByIdAsDTO(){
-        failFindByIdAsDTOTest(tournamentService);
-    }
-
-    @Test
     void findAll(){
         List<Tournament> tournamentList = new ArrayList<>();
         List<TournamentDTO> tournamentDTOs = new ArrayList<>();

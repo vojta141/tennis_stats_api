@@ -61,15 +61,6 @@ public class PlayerServiceTest extends ServiceTest{
         findByIdTest(player, playerRepository, playerService);
     }
 
-    @Test
-    void findByIdAsDTO(){
-        findByIdAsDTOTest(player, playerDTO, playerRepository, playerService);
-    }
-
-    @Test
-    void failFindByIdAsDTO(){
-        failFindByIdAsDTOTest(playerService);
-    }
 
     @Test
     void findAll(){
@@ -121,15 +112,6 @@ public class PlayerServiceTest extends ServiceTest{
         BDDMockito.when(player.getClub().getId()).thenReturn(clubId);
         BDDMockito.given(playerRepository.findAllByClubId(clubId)).willReturn(Collections.singletonList(player));
         Assertions.assertEquals(Collections.singletonList(player), playerService.findAllByClubId(clubId));
-        Mockito.verify(playerRepository, Mockito.atLeastOnce()).findAllByClubId(clubId);
-    }
-
-    @Test
-    void findAllByClubIdAsDTO(){
-        int clubId = 1;
-        BDDMockito.when(player.getClub().getId()).thenReturn(clubId);
-        BDDMockito.given(playerRepository.findAllByClubId(clubId)).willReturn(Collections.singletonList(player));
-        Assertions.assertEquals(Collections.singletonList(playerDTO), playerService.findAllByClubIdAsDTO(clubId));
         Mockito.verify(playerRepository, Mockito.atLeastOnce()).findAllByClubId(clubId);
     }
 

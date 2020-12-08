@@ -72,16 +72,6 @@ class DoublesServiceTest extends ServiceTest{
     }
 
     @Test
-    void findByIdAsDTO(){
-        findByIdAsDTOTest(doubles, doublesDTO, doublesRepository, doublesService);
-    }
-
-    @Test
-    void failFindByIdAsDTO(){
-        failFindByIdAsDTOTest(doublesService);
-    }
-
-    @Test
     void findAll(){
         List<Doubles> doublesList = new ArrayList<>();
         List<DoublesDTO> doublesDTOs = new ArrayList<>();
@@ -146,13 +136,6 @@ class DoublesServiceTest extends ServiceTest{
         Mockito.verify(doublesRepository, Mockito.atLeastOnce()).findByWinner(doubles.getWinner1().getId());
     }
 
-    @Test
-    void findByWinnerIdAsDTO() {
-        List<DoublesDTO> doublesList = Collections.singletonList(doublesDTO);
-        BDDMockito.given(doublesRepository.findByWinner(doubles.getWinner1().getId())).willReturn(Arrays.asList(doubles));
-        Assertions.assertEquals(doublesList, doublesService.findByWinnerIdAsDTO(doubles.getWinner1().getId()));
-        Mockito.verify(doublesRepository, Mockito.atLeastOnce()).findByWinner(doubles.getWinner1().getId());
-    }
 
     @Test
     void findByLoserId() {
@@ -162,13 +145,6 @@ class DoublesServiceTest extends ServiceTest{
         Mockito.verify(doublesRepository, Mockito.atLeastOnce()).findByLoser(doubles.getLoser1().getId());
     }
 
-    @Test
-    void findByLoserIdAsDTO() {
-        List<DoublesDTO> doublesList = Collections.singletonList(doublesDTO);
-        BDDMockito.given(doublesRepository.findByLoser(doubles.getLoser1().getId())).willReturn(Arrays.asList(doubles));
-        Assertions.assertEquals(doublesList, doublesService.findByLoserIdAsDTO(doubles.getLoser1().getId()));
-        Mockito.verify(doublesRepository, Mockito.atLeastOnce()).findByLoser(doubles.getLoser1().getId());
-    }
 
     @Test
     void remove(){

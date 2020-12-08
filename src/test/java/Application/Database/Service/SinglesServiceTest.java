@@ -60,16 +60,6 @@ public class SinglesServiceTest extends ServiceTest{
     }
 
     @Test
-    void findByIdAsDTO(){
-        findByIdAsDTOTest(singles, singlesDTO, singlesRepository, singlesService);
-    }
-
-    @Test
-    void failFindByIdAsDTO(){
-        failFindByIdAsDTOTest(singlesService);
-    }
-
-    @Test
     void findAll(){
         List<Singles> singlesList = new ArrayList<>();
         List<SinglesDTO> singlesDTOs = new ArrayList<>();

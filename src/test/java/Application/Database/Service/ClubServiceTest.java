@@ -35,18 +35,6 @@ class ClubServiceTest extends ServiceTest{
     }
 
     @Test
-    void failFindByIdAsDTO(){
-        failFindByIdAsDTOTest(clubService);
-    }
-
-    @Test
-    void findByIdAsDTO(){
-        Club club = new Club("Tennis");
-        ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
-        findByIdAsDTOTest(club, clubDTO, clubRepository, clubService);
-    }
-
-    @Test
     void findByNameTest() {
         Club club = new Club("Tenis club");
         BDDMockito.given(clubRepository.findByName(club.getName())).willReturn(Optional.of(club));
