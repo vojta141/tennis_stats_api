@@ -1,6 +1,8 @@
 package Application.Database.DTO;
 
-public class SinglesDTO{
+import org.springframework.hateoas.RepresentationModel;
+
+public class SinglesDTO extends RepresentationModel<SinglesDTO> {
 
     private int id;
 

@@ -3,11 +3,12 @@ package Application.Database.DTO;
 import Application.Database.Enity.Player;
 import Application.Database.Enity.Tournament;
 import com.sun.istack.NotNull;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-public class DoublesDTO{
+public class DoublesDTO extends RepresentationModel<DoublesDTO> {
 
 
     private final int id;
