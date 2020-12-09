@@ -3,7 +3,10 @@ package Application.Database.DTO;
 import Application.Database.Enity.Player;
 import Application.Database.Enity.Tournament;
 
-public class DoublesCreateDTO extends MatchCreateDTO {
+public class DoublesCreateDTO {
+
+    private String score;
+
     private  int winner1;
 
     private int winner2;
@@ -18,8 +21,9 @@ public class DoublesCreateDTO extends MatchCreateDTO {
         super();
     }
 
-    public DoublesCreateDTO(String score, int winner1, int winner2, int loser1, int loser2, int tournament) {
-        super(score);
+    public DoublesCreateDTO(String score, int winner1, int winner2, int loser1,
+                            int loser2, int tournament) {
+        this.score = score;
         this.winner1 = winner1;
         this.winner2 = winner2;
         this.loser1 = loser1;
@@ -65,5 +69,13 @@ public class DoublesCreateDTO extends MatchCreateDTO {
 
     public void setTournament(int tournament) {
         this.tournament = tournament;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

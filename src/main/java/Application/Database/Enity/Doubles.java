@@ -10,7 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Doubles extends Match {
+public class Doubles extends BaseEntity {
+
+    @NotNull
+    private String score;
 
     @NotNull
     @ManyToOne
@@ -37,8 +40,9 @@ public class Doubles extends Match {
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
-    public Doubles(String score, Player winner1, Player winner2, Player loser1, Player loser2, Tournament tournament) {
-        super(score);
+    public Doubles(@NotNull String score, @NotNull Player winner1, @NotNull Player winner2, @NotNull Player loser1,
+                   @NotNull Player loser2, @NotNull Tournament tournament) {
+        this.score = score;
         this.winner1 = winner1;
         this.winner2 = winner2;
         this.loser1 = loser1;
@@ -47,7 +51,6 @@ public class Doubles extends Match {
     }
 
     public Doubles() {
-        super();
 
     }
 
@@ -89,5 +92,13 @@ public class Doubles extends Match {
 
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

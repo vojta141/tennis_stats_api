@@ -5,7 +5,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Singles extends Match{
+public class Singles extends BaseEntity{
+
+    @NotNull
+    private String score;
 
     @NotNull
     @ManyToOne
@@ -22,15 +25,16 @@ public class Singles extends Match{
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
-    public Singles() {
-        super();
-    }
-
-    public Singles(String score, Player winner, Player loser, Tournament tournament) {
-        super(score);
+    public Singles(@NotNull String score, @NotNull Player winner, @NotNull Player loser,
+                   @NotNull Tournament tournament) {
+        this.score = score;
         this.winner = winner;
         this.loser = loser;
         this.tournament = tournament;
+    }
+
+    public Singles() {
+
     }
 
     public Player getWinner() {
@@ -55,5 +59,13 @@ public class Singles extends Match{
 
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

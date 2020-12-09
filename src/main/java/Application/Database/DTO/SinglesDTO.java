@@ -1,6 +1,10 @@
 package Application.Database.DTO;
 
-public class SinglesDTO extends MatchDTO{
+public class SinglesDTO{
+
+    private int id;
+
+    private String score;
 
     private final int winnerId;
 
@@ -9,7 +13,8 @@ public class SinglesDTO extends MatchDTO{
     private final int tournamentId;
 
     public SinglesDTO(int id, String score, int winnerId, int loserId, int tournamentId) {
-        super(id, score);
+        this.id = id;
+        this.score = score;
         this.winnerId = winnerId;
         this.loserId = loserId;
         this.tournamentId = tournamentId;
@@ -25,6 +30,14 @@ public class SinglesDTO extends MatchDTO{
 
     public int getTournamentId() {
         return tournamentId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getScore() {
+        return score;
     }
 
     @Override

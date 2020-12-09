@@ -7,7 +7,12 @@ import com.sun.istack.NotNull;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-public class DoublesDTO extends MatchDTO{
+public class DoublesDTO{
+
+
+    private final int id;
+
+    private final String score;
 
     private final int winner1Id;
 
@@ -19,8 +24,10 @@ public class DoublesDTO extends MatchDTO{
 
     private final int tournamentId;
 
-    public DoublesDTO(int id, String score, int winner1Id, int winner2Id, int loser1Id, int loser2Id, int tournamentId) {
-        super(id, score);
+    public DoublesDTO(int id, String score, int winner1Id, int winner2Id,
+                      int loser1Id, int loser2Id, int tournamentId) {
+        this.id = id;
+        this.score = score;
         this.winner1Id = winner1Id;
         this.winner2Id = winner2Id;
         this.loser1Id = loser1Id;
@@ -46,6 +53,14 @@ public class DoublesDTO extends MatchDTO{
 
     public int getTournamentId() {
         return tournamentId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getScore() {
+        return score;
     }
 
     @Override
