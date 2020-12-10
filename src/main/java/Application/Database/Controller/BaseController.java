@@ -2,15 +2,18 @@ package Application.Database.Controller;
 
 import Application.Database.Service.ServiceInterface;
 import Application.Exceptions.InstanceNotFoundException;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-public class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DTO>>{
+public abstract class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DTO>>{
 
     private ServiceInterface<E,CDTO,Integer> service;
     protected RepresentationModelAssembler<E, DTO> assembler;
@@ -25,7 +28,10 @@ public class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DT
         Optional<E> club = service.findById(id);
         if(club.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return assembler.toModel(club.get());
+        DTO dto = assembler.toModel(club.get());
+        dto.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(getClass()).all(0,10)).
+                withRel(IanaLinkRelations.COLLECTION));
+        return dto;
     }
 
     @PostMapping
@@ -57,4 +63,7 @@ public class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DT
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
         }
     }
+
+    public abstract PagedModel<DTO> all(@RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size);
 }
