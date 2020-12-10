@@ -7,7 +7,7 @@ import Application.Database.Enity.Doubles;
 import java.util.List;
 import java.util.Optional;
 
-public interface DoublesServiceInterface extends ServiceInterface<Doubles, DoublesCreateDTO, DoublesDTO, Integer>{
+public interface DoublesServiceInterface extends ServiceInterface<Doubles, DoublesCreateDTO, Integer>{
 
     List<Doubles> findByWinnerId(int winnerID);
 

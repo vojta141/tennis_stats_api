@@ -9,6 +9,6 @@ import Application.Exceptions.InstanceNotFoundException;
 import java.util.List;
 import java.util.Set;
 
-public interface TournamentServiceInterface extends ServiceInterface<Tournament, TournamentCreateDTO, TournamentDTO, Integer> {
+public interface TournamentServiceInterface extends ServiceInterface<Tournament, TournamentCreateDTO, Integer> {
     Set<Player> getParticipants(int id) throws InstanceNotFoundException;
 }

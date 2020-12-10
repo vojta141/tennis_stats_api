@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface ClubServiceInterface extends ServiceInterface<Club, ClubCreateDTO, ClubDTO, Integer> {
+public interface ClubServiceInterface extends ServiceInterface<Club, ClubCreateDTO, Integer> {
 
     Optional<Club> findByName(String name);
 }

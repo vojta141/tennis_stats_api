@@ -6,6 +6,6 @@ import Application.Database.Enity.Player;
 
 import java.util.List;
 
-public interface PlayerServiceInterface extends ServiceInterface<Player, PlayerCreateDTO, PlayerDTO, Integer> {
+public interface PlayerServiceInterface extends ServiceInterface<Player, PlayerCreateDTO, Integer> {
     List<Player> findAllByClubId(int clubId);
 }
