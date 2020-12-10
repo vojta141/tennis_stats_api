@@ -1,14 +1,10 @@
 package Application.Database.DTOAssemblers;
 
 import Application.Database.Controller.ClubController;
-import Application.Database.Controller.DoublesController;
-import Application.Database.Controller.PlayerController;
 import Application.Database.Controller.TournamentController;
 import Application.Database.DTO.TournamentDTO;
 import Application.Database.Enity.BaseEntity;
 import Application.Database.Enity.Tournament;
-import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
@@ -38,6 +34,7 @@ public class TournamentDTOAssembler extends RepresentationModelAssemblerSupport<
                 tournament.getCategory(), tournament.getClub().getId(), singles, doubles, players);
         tournamentDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TournamentController.class).findById(tournament.getId())).withSelfRel());
         tournamentDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ClubController.class).findById(tournament.getClub().getId())).withRel("club"));
+        tournamentDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TournamentController.class).getParticipants(tournament.getId())).withRel("participants"));
         return tournamentDTO;
     }
 }

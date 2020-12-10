@@ -88,8 +88,10 @@ public class TournamentService extends BaseService implements TournamentServiceI
     }
 
     @Override
+    @Transactional
     public void remove(Integer id) throws InstanceNotFoundException {
         Tournament tournament = getIfExists(id, tournamentRepository);
         tournamentRepository.delete(tournament);
     }
+
 }
