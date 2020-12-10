@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class ServiceTest {
 
     public <E , CDTO, DTO> void findByIdTest(E entity, JpaRepository<E, Integer> repository,
-                                             ServiceInterface<E, CDTO, DTO, Integer> service){
+                                             ServiceInterface<E, CDTO, Integer> service){
         if(entity instanceof BaseEntity) {
             BDDMockito.given(repository.findById(((BaseEntity) entity).getId())).willReturn(Optional.of(entity));
             Assertions.assertEquals(Optional.of(entity), service.findById(((BaseEntity) entity).getId()));
@@ -32,7 +32,7 @@ public class ServiceTest {
     }
 
     public <E, CDTO, DTO> void findAllTest(List<E> entities, List<DTO> DTOs, JpaRepository<E, Integer> repository,
-                                           ServiceInterface<E, CDTO, DTO, Integer> service){
+                                           ServiceInterface<E, CDTO, Integer> service){
         PageRequest pageRequest = PageRequest.of(0,10);
         PageImpl<E> page = new PageImpl<>(entities);
         BDDMockito.given(repository.findAll(pageRequest)).willReturn((page));
@@ -41,7 +41,7 @@ public class ServiceTest {
     }
 
     public <E, CDTO, DTO> void createTest(E entity, DTO dto, CDTO cdto, JpaRepository<E, Integer> repository,
-                                          ServiceInterface<E, CDTO, DTO, Integer> service){
+                                          ServiceInterface<E, CDTO, Integer> service){
         if(service instanceof BaseService) {
             BDDMockito.given(repository.save(any())).willReturn(entity);
             try {
@@ -59,7 +59,7 @@ public class ServiceTest {
     }
 
     public <E, CDTO, DTO> void updateTest(E entity, DTO dto, CDTO cdto, JpaRepository<E, Integer> repository,
-                                          ServiceInterface<E, CDTO, DTO, Integer> service){
+                                          ServiceInterface<E, CDTO, Integer> service){
         if(entity instanceof BaseEntity) {
             BDDMockito.given(repository.findById(((BaseEntity) entity).getId())).willReturn(Optional.of(entity));
             try {
@@ -77,7 +77,7 @@ public class ServiceTest {
     }
 
     public <E, CDTO, DTO> void updateTestFail(E entity, DTO dto, CDTO cdto, JpaRepository<E, Integer> repository,
-                                          ServiceInterface<E, CDTO, DTO, Integer> service){
+                                          ServiceInterface<E, CDTO, Integer> service){
         if(entity instanceof BaseEntity) {
             BDDMockito.given(repository.findById(((BaseEntity) entity).getId())).willReturn(Optional.of(entity));
             try {
@@ -90,7 +90,7 @@ public class ServiceTest {
     }
 
     public <E, CDTO, DTO> void removeTest(E entity, JpaRepository<E, Integer> repository,
-                                          ServiceInterface<E, CDTO, DTO, Integer> service){
+                                          ServiceInterface<E, CDTO, Integer> service){
         if(entity instanceof BaseEntity) {
             BDDMockito.given(repository.findById(((BaseEntity) entity).getId())).willReturn(Optional.of(entity));
             try {

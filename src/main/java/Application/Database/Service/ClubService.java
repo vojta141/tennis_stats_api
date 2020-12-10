@@ -1,19 +1,15 @@
 package Application.Database.Service;
 
 import Application.Database.DTO.ClubCreateDTO;
-import Application.Database.DTO.ClubDTO;
 import Application.Database.Enity.Club;
-import Application.Database.Enity.Player;
 import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class ClubService extends BaseService implements ClubServiceInterface {
