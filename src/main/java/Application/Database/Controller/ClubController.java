@@ -9,19 +9,15 @@ import Application.Database.Enity.Club;
 import Application.Database.Service.ClubService;
 import Application.Database.Service.PlayerService;
 import Application.Database.Service.ServiceInterface;
-import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -51,14 +47,14 @@ public class ClubController extends BaseController<Club, ClubCreateDTO, ClubDTO>
     }
 
     @GetMapping("/all")
-    PagedModel<ClubDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public PagedModel<ClubDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Club> clubs = clubService.findAll(PageRequest.of(page, size));
         System.out.println(clubs.getTotalElements());
         return pagedResourcesAssembler.toModel(clubs, clubDTOAssembler);
     }
 
     @GetMapping("/{clubId}/players")
-    List<PlayerDTO> clubPlayers(@PathVariable int clubId){
+    public List<PlayerDTO> clubPlayers(@PathVariable int clubId){
         return playerService.findAllByClubId(clubId).stream().map(playerDTOAssembler::toModel).collect(Collectors.toList());
     }
 }

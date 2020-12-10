@@ -38,7 +38,7 @@ public class TournamentController extends BaseController<Tournament, TournamentC
     }
 
     @GetMapping("/all")
-    PagedModel<TournamentDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public PagedModel<TournamentDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Tournament> tournaments = tournamentService.findAll(PageRequest.of(page, size));
         return pagedResourcesAssembler.toModel(tournaments, tournamentDTOAssembler);
     }

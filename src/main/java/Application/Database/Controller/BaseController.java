@@ -21,7 +21,7 @@ public class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DT
     }
 
     @GetMapping("/{id}")
-    DTO findById(@PathVariable int id){
+    public DTO findById(@PathVariable int id){
         Optional<E> club = service.findById(id);
         if(club.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -30,7 +30,7 @@ public class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DT
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    DTO save(@RequestBody CDTO cdto){
+    public DTO save(@RequestBody CDTO cdto){
         try{
             return assembler.toModel(service.create(cdto));
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DT
 
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    DTO update(@RequestBody CDTO club, @PathVariable int id){
+    public DTO update(@RequestBody CDTO club, @PathVariable int id){
         try{
             return assembler.toModel(service.update(id, club));
         }catch(Exception e){
@@ -50,7 +50,7 @@ public class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DT
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    void remove(@PathVariable int id){
+    public void remove(@PathVariable int id){
         try{
             service.remove(id);
         } catch (InstanceNotFoundException e) {

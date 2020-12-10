@@ -35,7 +35,7 @@ public class PlayerController extends BaseController<Player, PlayerCreateDTO, Pl
     }
 
     @GetMapping("/all")
-    PagedModel<PlayerDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public PagedModel<PlayerDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Player> players = playerService.findAll(PageRequest.of(page, size));
         return pagedResourcesAssembler.toModel(players, playerDTOAssembler);
     }

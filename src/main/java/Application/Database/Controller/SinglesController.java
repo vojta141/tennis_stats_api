@@ -40,7 +40,7 @@ public class SinglesController extends BaseController<Singles, SinglesCreateDTO,
     }
 
     @GetMapping("/all")
-    PagedModel<SinglesDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public PagedModel<SinglesDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Singles> singles = singlesService.findAll(PageRequest.of(page, size));
         return pagedResourcesAssembler.toModel(singles, singlesDTOAssembler);
     }

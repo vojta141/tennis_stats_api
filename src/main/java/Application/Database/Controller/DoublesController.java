@@ -41,12 +41,12 @@ public class DoublesController extends BaseController<Doubles, DoublesCreateDTO,
     }
 
     @GetMapping("/winner/{id}")
-    List<DoublesDTO> getAllWhereWinner(@PathVariable int id){
+    public List<DoublesDTO> getAllWhereWinner(@PathVariable int id){
            return doublesService.findByWinnerId(id).stream().map(doublesDTOAssembler::toModel).collect(Collectors.toList());
     }
 
     @GetMapping("/all")
-    PagedModel<DoublesDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public PagedModel<DoublesDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Doubles> doubles = doublesService.findAll(PageRequest.of(page, size));
         return pagedResourcesAssembler.toModel(doubles, doublesDTOAssembler);
     }
