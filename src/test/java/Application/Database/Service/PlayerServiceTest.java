@@ -80,6 +80,9 @@ public class PlayerServiceTest extends ServiceTest{
         BDDMockito.given(clubRepository.findById(player.getClub().getId()))
                 .willReturn(Optional.of(player.getClub()));
         createTest(player, playerDTO, playerCreateDTO, playerRepository, playerService);
+        player.setTournaments(null);
+        playerCreateDTO.setTournamentIDs(null);
+        createTest(player, playerDTO, playerCreateDTO, playerRepository, playerService);
     }
 
     @Test
@@ -91,6 +94,9 @@ public class PlayerServiceTest extends ServiceTest{
         }
         BDDMockito.given(clubRepository.findById(player.getClub().getId()))
                 .willReturn(Optional.of(player.getClub()));
+        updateTest(player, playerDTO, playerCreateDTO, playerRepository, playerService);
+        player.setTournaments(null);
+        playerCreateDTO.setTournamentIDs(null);
         updateTest(player, playerDTO, playerCreateDTO, playerRepository, playerService);
     }
 
