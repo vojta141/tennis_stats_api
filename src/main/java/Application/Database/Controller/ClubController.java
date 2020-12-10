@@ -53,6 +53,7 @@ public class ClubController extends BaseController<Club, ClubCreateDTO, ClubDTO>
     @GetMapping("/all")
     PagedModel<ClubDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Club> clubs = clubService.findAll(PageRequest.of(page, size));
+        System.out.println(clubs.getTotalElements());
         return pagedResourcesAssembler.toModel(clubs, clubDTOAssembler);
     }
 

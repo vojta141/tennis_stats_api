@@ -1,14 +1,11 @@
 package Application.Database.Controller;
 
-import Application.Database.DTO.ClubDTO;
 import Application.Database.DTO.PlayerCreateDTO;
 import Application.Database.DTO.PlayerDTO;
 import Application.Database.DTOAssemblers.PlayerDTOAssembler;
-import Application.Database.Enity.Club;
 import Application.Database.Enity.Player;
 import Application.Database.Service.PlayerService;
 import Application.Database.Service.ServiceInterface;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
