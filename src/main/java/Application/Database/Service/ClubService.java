@@ -32,7 +32,7 @@ public class ClubService extends BaseService implements ClubServiceInterface {
 
     @Override
     @Transactional
-    public Club create(ClubCreateDTO clubSrc){
+    public Club create(ClubCreateDTO clubSrc) throws InstanceNotFoundException{
         Club club = new Club();
         club.setName(clubSrc.getName());
         return clubRepository.save(club);
