@@ -1,18 +1,9 @@
 package Application.Database.Controller;
 
-import Application.Database.DTO.ClubCreateDTO;
-import Application.Database.DTO.ClubDTO;
-import Application.Database.Enity.Club;
 import Application.Database.Service.ServiceInterface;
 import Application.Exceptions.InstanceNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -63,7 +54,7 @@ public class BaseController<E,CDTO, DTO extends RepresentationModel<? extends DT
         try{
             service.remove(id);
         } catch (InstanceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "", e);
         }
     }
 }
