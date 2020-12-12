@@ -45,6 +45,11 @@ public class DoublesController extends BaseController<Doubles, DoublesCreateDTO,
            return doublesService.findByWinnerId(id).stream().map(doublesDTOAssembler::toModel).collect(Collectors.toList());
     }
 
+    @GetMapping("/loser/{id}")
+    public List<DoublesDTO> getAllWhereLoser(@PathVariable int id){
+        return doublesService.findByLoserId(id).stream().map(doublesDTOAssembler::toModel).collect(Collectors.toList());
+    }
+
     @GetMapping("/all")
     public PagedModel<DoublesDTO> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Doubles> doubles = doublesService.findAll(PageRequest.of(page, size));

@@ -15,6 +15,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -167,5 +169,33 @@ public class TournamentServiceTest extends ServiceTest{
             e.printStackTrace();
         }
         BDDMockito.verify(tournamentRepository, Mockito.atLeastOnce()).findAllByClubId(tournament.getClub().getId());
+    }
+
+    @Test
+    void getDoubles(){
+        PageRequest pageRequest = PageRequest.of(0,1);
+        List<Doubles> doubles = new ArrayList<>(tournament.getDoubles());
+        PageImpl<Doubles> page = new PageImpl<>(doubles, pageRequest, doubles.size());
+        BDDMockito.given(tournamentRepository.findById(tournament.getId())).willReturn(Optional.of(tournament));
+        try {
+            Assertions.assertEquals(page, tournamentService.getDoubles(tournament.getId(), pageRequest));
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        }
+        BDDMockito.verify(tournamentRepository, Mockito.atLeastOnce()).findById(tournament.getId());
+    }
+
+    @Test
+    void getSingles(){
+        PageRequest pageRequest = PageRequest.of(0,1);
+        List<Singles> singles = new ArrayList<>(tournament.getSingles());
+        PageImpl<Singles> page = new PageImpl<>(singles, pageRequest, singles.size());
+        BDDMockito.given(tournamentRepository.findById(tournament.getId())).willReturn(Optional.of(tournament));
+        try {
+            Assertions.assertEquals(page, tournamentService.getSingles(tournament.getId(), pageRequest));
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        }
+        BDDMockito.verify(tournamentRepository, Mockito.atLeastOnce()).findById(tournament.getId());
     }
 }

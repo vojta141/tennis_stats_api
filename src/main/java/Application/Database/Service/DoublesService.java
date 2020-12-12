@@ -37,6 +37,7 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
         return doublesRepository.findByLoser(loserID);
     }
 
+
     @Override
     @Transactional
     public Doubles create(DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{
@@ -66,6 +67,7 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
     }
 
     @Override
+    @Transactional
     public void remove(Integer id) throws InstanceNotFoundException {
         Doubles doubles = getIfExists(id, doublesRepository);
         doublesRepository.delete(doubles);

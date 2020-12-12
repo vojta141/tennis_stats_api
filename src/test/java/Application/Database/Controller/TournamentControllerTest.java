@@ -1,9 +1,7 @@
 package Application.Database.Controller;
 
-import Application.Database.Enity.Club;
-import Application.Database.Enity.Player;
-import Application.Database.Enity.Singles;
-import Application.Database.Enity.Tournament;
+import Application.Database.DTO.PlayerDTO;
+import Application.Database.Enity.*;
 import Application.Database.Service.SinglesService;
 import Application.Database.Service.TournamentService;
 import Application.Exceptions.InstanceNotFoundException;
@@ -24,10 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -77,6 +72,70 @@ class TournamentControllerTest {
             e.printStackTrace();
         }
         BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).findAll(pageable);
+    }
+
+    @Test
+    void getTournamentDoubles(){
+        int page = 0;
+        int size = 2;
+        int total = 2;
+        Pageable pageable = PageRequest.of(page, size);
+        List<Player> players = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            players.add(new Player("Paul" + i, new Date(), 1 + i, tournament.getClub(), null));
+        }
+        Doubles doubles = new Doubles("6:0, 6:0", players.get(0), players.get(1), players.get(2), players.get(3), tournament);
+        Page<Doubles> pageExpected = new PageImpl<>(List.of(doubles), pageable, 1);
+        tournament.setDoubles(new HashSet<>(Collections.singletonList(doubles)));
+        try {
+            BDDMockito.given(tournamentService.getDoubles(tournament.getId(), pageable)).willReturn(pageExpected);
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/tournament/{id}/doubles?page={page}&size={size}", tournament.getId(), page, size)
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].score", CoreMatchers.is(doubles.getScore())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser1Id", CoreMatchers.is(doubles.getLoser1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser2Id", CoreMatchers.is(doubles.getLoser2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner1Id", CoreMatchers.is(doubles.getWinner1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner2Id", CoreMatchers.is(doubles.getWinner2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].tournamentId", CoreMatchers.is(doubles.getTournament().getId())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+            BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getDoubles(tournament.getId(), pageable);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getTournamentSingles(){
+        int page = 0;
+        int size = 2;
+        int total = 2;
+        Pageable pageable = PageRequest.of(page, size);
+        List<Player> players = new ArrayList<>();
+        for(int i = 0; i < 2; i++){
+            players.add(new Player("Paul" + i, new Date(), 1 + i, tournament.getClub(), null));
+        }
+        Singles singles = new Singles("6:0, 6:0", players.get(0), players.get(1), tournament);
+        Page<Singles> pageExpected = new PageImpl<>(List.of(singles), pageable, 1);
+        tournament.setSingles(new HashSet<>(Collections.singletonList(singles)));
+        try {
+            BDDMockito.given(tournamentService.getSingles(tournament.getId(), pageable)).willReturn(pageExpected);
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/tournament/{id}/singles?page={page}&size={size}", tournament.getId(), page, size)
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].score", CoreMatchers.is(singles.getScore())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].loserId", CoreMatchers.is(singles.getLoser().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].winnerId", CoreMatchers.is(singles.getWinner().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].tournamentId", CoreMatchers.is(singles.getTournament().getId())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+            BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getSingles(tournament.getId(), pageable);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

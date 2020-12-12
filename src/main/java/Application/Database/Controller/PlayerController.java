@@ -1,5 +1,6 @@
 package Application.Database.Controller;
 
+import Application.Database.DTO.DoublesDTO;
 import Application.Database.DTO.PlayerCreateDTO;
 import Application.Database.DTO.PlayerDTO;
 import Application.Database.DTOAssemblers.PlayerDTOAssembler;
@@ -11,10 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/player")
@@ -39,4 +37,9 @@ public class PlayerController extends BaseController<Player, PlayerCreateDTO, Pl
         Page<Player> players = playerService.findAll(PageRequest.of(page, size));
         return pagedResourcesAssembler.toModel(players, playerDTOAssembler);
     }
+
+    /*@GetMapping("/{id}/doubles")
+    public PagedModel<DoublesDTO> getPlayerDoubles(@PathVariable int id){
+
+    }*/
 }

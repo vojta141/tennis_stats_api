@@ -4,7 +4,9 @@ import Application.Database.DTO.TournamentCreateDTO;
 import Application.Database.Enity.*;
 import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -32,6 +34,19 @@ public class TournamentService extends BaseService implements TournamentServiceI
         return tournamentRepository.findAllByClubId(clubId);
     }
 
+    @Override
+    public Page<Doubles> getDoubles(int tournamentId, Pageable pageable) throws InstanceNotFoundException{
+        Tournament tournament = getIfExists(tournamentId, tournamentRepository);
+        List<Doubles> doubles = new ArrayList<>(tournament.getDoubles());
+        return new PageImpl<>(doubles, pageable, doubles.size());
+    }
+
+    @Override
+    public Page<Singles> getSingles(int tournamentId, Pageable pageable) throws InstanceNotFoundException{
+        Tournament tournament = getIfExists(tournamentId, tournamentRepository);
+        List<Singles> singles = new ArrayList<>(tournament.getSingles());
+        return new PageImpl<>(singles, pageable, singles.size());
+    }
 
     @Override
     @Transactional

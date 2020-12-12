@@ -73,12 +73,37 @@ class DoublesControllerTest {
             ).andExpect(MockMvcResultMatchers.jsonPath("$[0].winner1Id", CoreMatchers.is(winner.getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].winner2Id", CoreMatchers.is(doubles.getWinner2().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser1Id", CoreMatchers.is(doubles.getLoser1().getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser2Id", CoreMatchers.is(doubles.getLoser2().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].score", CoreMatchers.is(doubles.getScore())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
         } catch (Exception e) {
             e.printStackTrace();
         }
         BDDMockito.verify(doublesService, Mockito.atLeastOnce()).findByWinnerId(winner.getId());
+    }
+
+    @Test
+    void getAllWhereLoser() {
+        Player loser = doubles.getLoser1();
+        List<Doubles> result = new ArrayList<>();
+        result.add(doubles);
+        BDDMockito.given(doublesService.findByLoserId(loser.getId())).willReturn(result);
+        try {
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/doubles/loser/{id}", loser.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$[0].winner1Id", CoreMatchers.is(loser.getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].winner2Id", CoreMatchers.is(doubles.getWinner2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser1Id", CoreMatchers.is(doubles.getLoser1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser2Id", CoreMatchers.is(doubles.getLoser2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].score", CoreMatchers.is(doubles.getScore())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BDDMockito.verify(doublesService, Mockito.atLeastOnce()).findByLoserId(loser.getId());
     }
 
     @Test
