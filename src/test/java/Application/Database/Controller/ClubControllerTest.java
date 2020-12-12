@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -101,7 +102,7 @@ class ClubControllerTest {
     }
 
     @Test
-    void findClubTournaments(){
+    void clubTournaments(){
         Tournament tournament = new Tournament(new Date(), "Test tournament", "C",
                 club);
         try {
@@ -123,6 +124,24 @@ class ClubControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    void clubTournamentsFail(){
+        try {
+            BDDMockito.given(tournamentService.findTournamentsByClubId(club.getId()))
+                    .willThrow(new InstanceNotFoundException());
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/club/{id}/tournaments", club.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.status().isNotFound());
+            BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).findTournamentsByClubId(club.getId());
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

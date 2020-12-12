@@ -25,6 +25,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class TournamentControllerTest {
@@ -72,6 +74,29 @@ class TournamentControllerTest {
             e.printStackTrace();
         }
         BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).findAll(pageable);
+    }
+
+    @Test
+    void getParticipants(){
+        Player player = new Player("Paul", new Date(), 1, tournament.getClub(), null);
+        Set<Player> players = new HashSet<>(Collections.singletonList(player));
+        tournament.setPlayers(players);
+        try {
+            BDDMockito.given(tournamentService.getParticipants(tournament.getId())).willReturn(players);
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/tournament/{id}/participants", tournament.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$.[0].name", CoreMatchers.is(player.getName())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", CoreMatchers.is(player.getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.[0].bigPoints", CoreMatchers.is(player.getBigPoints())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.[0].clubId", CoreMatchers.is(player.getClub().getId())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+            BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getParticipants(tournament.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -133,6 +158,53 @@ class TournamentControllerTest {
                     .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].tournamentId", CoreMatchers.is(singles.getTournament().getId())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
             BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getSingles(tournament.getId(), pageable);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    void getParticipantsFail(){
+        try {
+            BDDMockito.given(tournamentService.getParticipants(tournament.getId())).willThrow(new InstanceNotFoundException());
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/tournament/{id}/participants", tournament.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.status().isNotFound());
+            BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getParticipants(tournament.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getTournamentDoublesFail(){
+        try {
+            BDDMockito.given(tournamentService.getDoubles(eq(tournament.getId()), BDDMockito.any())).willThrow(new InstanceNotFoundException());
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/tournament/{id}/doubles", tournament.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.status().isNotFound());
+            BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getDoubles(eq(tournament.getId()), BDDMockito.any());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getTournamentSinglesFail(){
+        try {
+            BDDMockito.given(tournamentService.getSingles(eq(tournament.getId()), BDDMockito.any())).willThrow(new InstanceNotFoundException());
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/tournament/{id}/singles", tournament.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.status().isNotFound());
+            BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getSingles(eq(tournament.getId()), BDDMockito.any());
         } catch (Exception e) {
             e.printStackTrace();
         }
