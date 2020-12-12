@@ -11,4 +11,6 @@ import java.util.Set;
 
 public interface TournamentServiceInterface extends ServiceInterface<Tournament, TournamentCreateDTO, Integer> {
     Set<Player> getParticipants(int id) throws InstanceNotFoundException;
+
+    List<Tournament> findTournamentsByClubId(int clubId) throws InstanceNotFoundException;
 }

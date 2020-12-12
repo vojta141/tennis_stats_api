@@ -155,4 +155,17 @@ public class TournamentServiceTest extends ServiceTest{
         }
         BDDMockito.verify(tournamentRepository, Mockito.atLeastOnce()).findById(tournament.getId());
     }
+
+    @Test
+    void findTournamentsByClubId(){
+        BDDMockito.given(tournamentRepository.findAllByClubId(tournament.getClub().getId()))
+                .willReturn(Collections.singletonList(tournament));
+        try {
+            Assertions.assertEquals(tournament, tournamentService.
+                    findTournamentsByClubId(tournament.getClub().getId()).get(0));
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        }
+        BDDMockito.verify(tournamentRepository, Mockito.atLeastOnce()).findAllByClubId(tournament.getClub().getId());
+    }
 }

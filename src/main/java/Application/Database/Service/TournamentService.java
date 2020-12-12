@@ -28,6 +28,12 @@ public class TournamentService extends BaseService implements TournamentServiceI
     }
 
     @Override
+    public List<Tournament> findTournamentsByClubId(int clubId) throws InstanceNotFoundException{
+        return tournamentRepository.findAllByClubId(clubId);
+    }
+
+
+    @Override
     @Transactional
     public Tournament create(TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
         Club club = getIfExists(tournamentCreateDTO.getClub(), clubRepository);

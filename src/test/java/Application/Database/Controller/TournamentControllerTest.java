@@ -6,6 +6,7 @@ import Application.Database.Enity.Singles;
 import Application.Database.Enity.Tournament;
 import Application.Database.Service.SinglesService;
 import Application.Database.Service.TournamentService;
+import Application.Exceptions.InstanceNotFoundException;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -76,7 +78,5 @@ class TournamentControllerTest {
         }
         BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).findAll(pageable);
     }
-
-
 
 }

@@ -2,8 +2,11 @@ package Application.Database.Controller;
 
 import Application.Database.Enity.Club;
 import Application.Database.Enity.Player;
+import Application.Database.Enity.Tournament;
 import Application.Database.Service.ClubService;
 import Application.Database.Service.PlayerService;
+import Application.Database.Service.TournamentService;
+import Application.Exceptions.InstanceNotFoundException;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +46,9 @@ class ClubControllerTest {
 
     @MockBean
     private PlayerService playerService;
+
+    @MockBean
+    private TournamentService tournamentService;
 
 
     Club club;
@@ -92,5 +98,31 @@ class ClubControllerTest {
             e.printStackTrace();
         }
         BDDMockito.verify(playerService, Mockito.atLeastOnce()).findAllByClubId(club.getId());
+    }
+
+    @Test
+    void findClubTournaments(){
+        Tournament tournament = new Tournament(new Date(), "Test tournament", "C",
+                club);
+        try {
+            BDDMockito.given(tournamentService.findTournamentsByClubId(tournament.getClub().getId()))
+                    .willReturn(Collections.singletonList(tournament));
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/club/{id}/tournaments", tournament.getClub().getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$[0].id", CoreMatchers.is(tournament.getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", CoreMatchers.is(tournament.getName())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].category", CoreMatchers.is(tournament.getCategory())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].clubId", CoreMatchers.is(tournament.getClub().getId())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+            BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).findTournamentsByClubId(tournament.getClub().getId());
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
