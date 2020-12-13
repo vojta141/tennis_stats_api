@@ -1,11 +1,10 @@
 package Application.Database.Controller;
 
-import Application.Database.Enity.Club;
-import Application.Database.Enity.Doubles;
-import Application.Database.Enity.Player;
-import Application.Database.Enity.Tournament;
+import Application.Database.Enity.*;
 import Application.Database.Service.DoublesService;
 import Application.Database.Service.PlayerService;
+import Application.Database.Service.TournamentService;
+import Application.Exceptions.InstanceNotFoundException;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,6 +41,9 @@ class PlayerControllerTest {
 
     @MockBean
     private PlayerService playerService;
+
+    @MockBean
+    private TournamentService tournamentService;
 
     private List<Player> players;
 
@@ -88,5 +91,134 @@ class PlayerControllerTest {
             e.printStackTrace();
         }
         BDDMockito.verify(playerService, Mockito.atLeastOnce()).findAll(pageable);
+    }
+
+    @Test
+    void getPlayerTournaments(){
+        int page = 0;
+        int size = 10;
+        Tournament tournament = new Tournament(new Date(), "Test tournament", "C", players.get(0).getClub());
+        List<Tournament> tournaments = new ArrayList<>();
+        tournaments.add(tournament);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Tournament> expected = new PageImpl<>(tournaments, pageable, tournaments.size());
+        try {
+            BDDMockito.given(playerService.getTournaments(players.get(0).getId(), pageable)).willReturn(expected);
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/player/{id}/tournaments", players.get(0).getId(), page, size)
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].name", CoreMatchers.is(tournament.getName())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].category", CoreMatchers.is(tournament.getCategory())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].clubId", CoreMatchers.is(players.get(0).getClub().getId())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getPlayerTournamentsFail(){
+        int page = 0;
+        int size = 10;
+        Pageable pageable = PageRequest.of(page, size);
+        try {
+            BDDMockito.given(playerService.getTournaments(players.get(0).getId(), pageable)).willThrow(new InstanceNotFoundException());
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/player/{id}/tournaments", players.get(0).getId(), page, size)
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.status().isNotFound());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getDoublesAtTournament(){
+        Tournament tournament = new Tournament(new Date(), "Test tournament", "C", players.get(0).getClub());
+        List<Doubles> doubles = new ArrayList<>();
+        doubles.add(new Doubles("6:0", players.get(0), players.get(1), players.get(2), players.get(3), tournament));
+        doubles.add(new Doubles("6:1", players.get(0), players.get(1), players.get(2), players.get(3), tournament));
+        try {
+            BDDMockito.given(tournamentService.getDoublesOfPlayer(tournament.getId(), players.get(0).getId())).willReturn(doubles);
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/player/{playerId}/tournaments/{tournamentId}/doubles", players.get(0).getId(), tournament.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$[0].score", CoreMatchers.is(doubles.get(0).getScore())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].winner1Id", CoreMatchers.is(doubles.get(0).getWinner1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].winner2Id", CoreMatchers.is(doubles.get(0).getWinner2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser1Id", CoreMatchers.is(doubles.get(0).getLoser1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser2Id", CoreMatchers.is(doubles.get(0).getLoser2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].score", CoreMatchers.is(doubles.get(1).getScore())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].winner1Id", CoreMatchers.is(doubles.get(1).getWinner1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].winner2Id", CoreMatchers.is(doubles.get(1).getWinner2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].loser1Id", CoreMatchers.is(doubles.get(1).getLoser1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].loser2Id", CoreMatchers.is(doubles.get(1).getLoser2().getId())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getDoublesAtTournamentFail(){
+        Tournament tournament = new Tournament(new Date(), "Test tournament", "C", players.get(0).getClub());
+        try {
+            BDDMockito.given(tournamentService.getDoublesOfPlayer(tournament.getId(), players.get(0).getId())).willThrow(new InstanceNotFoundException());
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/player/{playerId}/tournaments/{tournamentId}/doubles", players.get(0).getId(), tournament.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.status().isNotFound());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getSinglesAtTournament(){
+        Tournament tournament = new Tournament(new Date(), "Test tournament", "C", players.get(0).getClub());
+        List<Singles> singles = new ArrayList<>();
+        singles.add(new Singles("6:0", players.get(0), players.get(1), tournament));
+        singles.add(new Singles("6:1", players.get(0), players.get(1), tournament));
+        try {
+            BDDMockito.given(tournamentService.getSinglesOfPlayer(tournament.getId(), players.get(0).getId())).willReturn(singles);
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/player/{playerId}/tournaments/{tournamentId}/singles", players.get(0).getId(), tournament.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$[0].score", CoreMatchers.is(singles.get(0).getScore())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].winnerId", CoreMatchers.is(singles.get(0).getWinner().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loserId", CoreMatchers.is(singles.get(0).getLoser().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].score", CoreMatchers.is(singles.get(1).getScore())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].winnerId", CoreMatchers.is(singles.get(1).getWinner().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].loserId", CoreMatchers.is(singles.get(1).getLoser().getId())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getSinglesAtTournamentFail(){
+        Tournament tournament = new Tournament(new Date(), "Test tournament", "C", players.get(0).getClub());
+        try {
+            BDDMockito.given(tournamentService.getSinglesOfPlayer(tournament.getId(), players.get(0).getId())).willThrow(new InstanceNotFoundException());
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/player/{playerId}/tournaments/{tournamentId}/singles", players.get(0).getId(), tournament.getId())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.status().isNotFound());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

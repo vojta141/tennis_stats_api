@@ -8,6 +8,7 @@ import Application.Database.Repository.ClubRepository;
 import Application.Database.Repository.PlayerRepository;
 import Application.Database.Repository.PlayerRepository;
 import Application.Database.Repository.TournamentRepository;
+import Application.Exceptions.InstanceNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -124,5 +129,24 @@ public class PlayerServiceTest extends ServiceTest{
     @Test
     void remove(){
         removeTest(player, playerRepository, playerService);
+    }
+
+    @Test
+    void getTournaments(){
+        int page = 0;
+        int size = 10;
+        Tournament tournament = new Tournament(new Date(), "Test tournament", "C", player.getClub());
+        List<Tournament> tournaments = new ArrayList<>();
+        tournaments.add(tournament);
+        player.setTournaments(new HashSet<>(tournaments));
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Tournament> expected = new PageImpl<>(tournaments, pageable, tournaments.size());
+        BDDMockito.given(playerRepository.findById(player.getId())).willReturn(Optional.of(player));
+        try {
+            Assertions.assertEquals(expected, playerService.getTournaments(player.getId(), pageable));
+            BDDMockito.verify(playerRepository, Mockito.atLeastOnce()).findById(player.getId());
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

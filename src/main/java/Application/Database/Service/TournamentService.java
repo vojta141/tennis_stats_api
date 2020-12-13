@@ -49,6 +49,31 @@ public class TournamentService extends BaseService implements TournamentServiceI
     }
 
     @Override
+    public List<Doubles> getDoublesOfPlayer(int tournamentId, int playerId) throws InstanceNotFoundException{
+        Tournament tournament = getIfExists(tournamentId, tournamentRepository);
+        List<Doubles> doubles = new ArrayList<>(tournament.getDoubles());
+        List<Doubles> result = new ArrayList<>();
+        for(Doubles match : doubles){
+            if(match.getWinner1().getId() == playerId || match.getLoser1().getId() == playerId
+            || match.getWinner2().getId() == playerId || match.getLoser2().getId() == playerId)
+                result.add(match);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Singles> getSinglesOfPlayer(int tournamentId, int playerId) throws InstanceNotFoundException{
+        Tournament tournament = getIfExists(tournamentId, tournamentRepository);
+        List<Singles> singles = new ArrayList<>(tournament.getSingles());
+        List<Singles> result = new ArrayList<>();
+        for(Singles match : singles){
+            if(match.getWinner().getId() == playerId || match.getLoser().getId() == playerId)
+                result.add(match);
+        }
+        return result;
+    }
+
+    @Override
     @Transactional
     public Tournament create(TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
         Club club = getIfExists(tournamentCreateDTO.getClub(), clubRepository);

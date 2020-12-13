@@ -1,11 +1,10 @@
 package Application.Database.Service;
 
 import Application.Database.DTO.PlayerCreateDTO;
-import Application.Database.Enity.Club;
-import Application.Database.Enity.Player;
-import Application.Database.Enity.Tournament;
+import Application.Database.Enity.*;
 import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,5 +73,12 @@ public class PlayerService extends BaseService implements PlayerServiceInterface
     public void remove(Integer id) throws InstanceNotFoundException {
         Player player = getIfExists(id, playerRepository);
         playerRepository.delete(player);
+    }
+
+    @Override
+    public Page<Tournament> getTournaments(int playerId, Pageable pageable) throws InstanceNotFoundException{
+        Player player = getIfExists(playerId, playerRepository);
+        List<Tournament> tournaments = new ArrayList<>(player.getTournaments());
+        return new PageImpl<>(tournaments, pageable, tournaments.size());
     }
 }

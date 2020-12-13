@@ -198,4 +198,46 @@ public class TournamentServiceTest extends ServiceTest{
         }
         BDDMockito.verify(tournamentRepository, Mockito.atLeastOnce()).findById(tournament.getId());
     }
+
+    @Test
+    void getDoublesOfPlayer(){
+        List<Player> playerList = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            Player tmp = Mockito.mock(Player.class);
+            BDDMockito.when(tmp.getId()).thenReturn(i+1);
+            playerList.add(tmp);
+        }
+        Doubles doublesMatch = new Doubles("6:0", playerList.get(0), playerList.get(1), playerList.get(2), playerList.get(3), tournament);
+        tournament.setDoubles(new HashSet<>(Collections.singletonList(doublesMatch)));
+        BDDMockito.given(tournamentRepository.findById(tournament.getId())).willReturn(Optional.ofNullable(tournament));
+        try {
+            Assertions.assertEquals(doublesMatch, tournamentService.getDoublesOfPlayer(tournament.getId(), 1).get(0));
+            Assertions.assertEquals(1, tournamentService.getDoublesOfPlayer(tournament.getId(), 1).size());
+            BDDMockito.verify(tournamentRepository, Mockito.atLeastOnce()).findById(tournament.getId());
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    void getSinglesOfPlayer(){
+        List<Player> playerList = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            Player tmp = Mockito.mock(Player.class);
+            BDDMockito.when(tmp.getId()).thenReturn(i+1);
+            playerList.add(tmp);
+        }
+        Singles singlesMatch = new Singles("6:0", playerList.get(0), playerList.get(1), tournament);
+        tournament.setSingles(new HashSet<>(Collections.singletonList(singlesMatch)));
+        BDDMockito.given(tournamentRepository.findById(tournament.getId())).willReturn(Optional.ofNullable(tournament));
+        try {
+            Assertions.assertEquals(singlesMatch, tournamentService.getSinglesOfPlayer(tournament.getId(), 1).get(0));
+            Assertions.assertEquals(1, tournamentService.getSinglesOfPlayer(tournament.getId(), 1).size());
+            BDDMockito.verify(tournamentRepository, Mockito.atLeastOnce()).findById(tournament.getId());
+        } catch (InstanceNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

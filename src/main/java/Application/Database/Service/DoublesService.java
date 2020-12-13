@@ -37,7 +37,6 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
         return doublesRepository.findByLoser(loserID);
     }
 
-
     @Override
     @Transactional
     public Doubles create(DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{

@@ -21,4 +21,8 @@ public interface TournamentServiceInterface extends ServiceInterface<Tournament,
     Page<Doubles> getDoubles(int tournamentId, Pageable pageable) throws InstanceNotFoundException;
 
     Page<Singles> getSingles(int tournamentId, Pageable pageable) throws InstanceNotFoundException;
+
+    List<Singles> getSinglesOfPlayer(int tournamentId, int playerId) throws InstanceNotFoundException;
+
+    public List<Doubles> getDoublesOfPlayer(int tournamentId, int playerId) throws InstanceNotFoundException;
 }
