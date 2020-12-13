@@ -21,7 +21,10 @@ public class Player extends BaseEntity{
     @JoinColumn(name = "club_id")
     private Club club;
 
-    @ManyToMany(mappedBy = "players")
+    @ManyToMany
+    @JoinTable(name = "participation",
+            joinColumns = @JoinColumn(name = "players_id"),
+            inverseJoinColumns = @JoinColumn(name = "tournament_id"))
     private Set<Tournament> tournaments;
 
     public Player() {

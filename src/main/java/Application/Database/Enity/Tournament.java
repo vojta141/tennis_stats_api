@@ -30,10 +30,7 @@ public class Tournament extends BaseEntity{
     @OneToMany(mappedBy = "tournament")
     private Set<Doubles> doubles;
 
-    @ManyToMany
-    @JoinTable(name = "participation",
-                joinColumns = @JoinColumn(name = "tournament_id"),
-                inverseJoinColumns = @JoinColumn(name = "players_id"))
+    @ManyToMany(mappedBy = "tournaments")
     private Set<Player> players;
 
     public Tournament()
