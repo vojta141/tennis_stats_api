@@ -6,6 +6,7 @@ import Application.Database.Enity.Player;
 import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +36,7 @@ public class ClubService extends BaseService implements ClubServiceInterface {
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Club create(ClubCreateDTO clubSrc) throws InstanceNotFoundException{
         Club club = new Club();
         club.setName(clubSrc.getName());
@@ -43,6 +45,7 @@ public class ClubService extends BaseService implements ClubServiceInterface {
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Club update(Integer id, ClubCreateDTO clubSrc) throws InstanceNotFoundException {
         Club club = getIfExists(id, clubRepository);
         club.setName(clubSrc.getName());
@@ -50,6 +53,8 @@ public class ClubService extends BaseService implements ClubServiceInterface {
     }
 
     @Override
+    @Transactional
+    @Secured("ROLE_ADMIN")
     public void remove(Integer id) throws InstanceNotFoundException {
         Club club = getIfExists(id, clubRepository);
         clubRepository.delete(club);

@@ -9,6 +9,7 @@ import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,7 @@ public class SinglesService extends BaseService implements SinglesServiceInterfa
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Singles create(SinglesCreateDTO singlesCreateDTO) throws InstanceNotFoundException {
         if(singlesCreateDTO.getWinner() == singlesCreateDTO.getLoser())
             throw new InstanceNotFoundException("Players are identical");
@@ -42,6 +44,7 @@ public class SinglesService extends BaseService implements SinglesServiceInterfa
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Singles update(Integer id, SinglesCreateDTO singlesCreateDTO) throws InstanceNotFoundException{
         Singles singles = getIfExists(id, singlesRepository);
         if(singlesCreateDTO.getWinner() == singlesCreateDTO.getLoser())
@@ -56,6 +59,8 @@ public class SinglesService extends BaseService implements SinglesServiceInterfa
     }
 
     @Override
+    @Transactional
+    @Secured("ROLE_ADMIN")
     public void remove(Integer id) throws InstanceNotFoundException {
         Singles singles = getIfExists(id, singlesRepository);
         singlesRepository.delete(singles);

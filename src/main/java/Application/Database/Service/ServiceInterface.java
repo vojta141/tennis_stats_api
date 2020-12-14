@@ -4,6 +4,7 @@ import Application.Database.DTO.DoublesDTO;
 import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

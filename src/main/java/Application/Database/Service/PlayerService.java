@@ -6,6 +6,7 @@ import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,7 @@ public class PlayerService extends BaseService implements PlayerServiceInterface
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Player create (PlayerCreateDTO playerCreateDTO) throws InstanceNotFoundException {
         Club club = getIfExists(playerCreateDTO.getClubId(), clubRepository);
         Set<Integer> tournamentIDs = playerCreateDTO.getTournamentIDs();
@@ -49,6 +51,7 @@ public class PlayerService extends BaseService implements PlayerServiceInterface
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Player update(Integer id, PlayerCreateDTO playerCreateDTO) throws InstanceNotFoundException{
         Player player = getIfExists(id, playerRepository);
         Club club = getIfExists(playerCreateDTO.getClubId(), clubRepository);
@@ -70,6 +73,7 @@ public class PlayerService extends BaseService implements PlayerServiceInterface
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public void remove(Integer id) throws InstanceNotFoundException {
         Player player = getIfExists(id, playerRepository);
         playerRepository.delete(player);

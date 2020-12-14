@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -75,6 +76,7 @@ public class TournamentService extends BaseService implements TournamentServiceI
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Tournament create(TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
         Club club = getIfExists(tournamentCreateDTO.getClub(), clubRepository);
         Set<Doubles> doubles = null;
@@ -102,6 +104,7 @@ public class TournamentService extends BaseService implements TournamentServiceI
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Tournament update(Integer id, TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
         Tournament tournament = getIfExists(id, tournamentRepository);
         Club club = getIfExists(tournamentCreateDTO.getClub(), clubRepository);
@@ -135,6 +138,7 @@ public class TournamentService extends BaseService implements TournamentServiceI
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public void remove(Integer id) throws InstanceNotFoundException {
         Tournament tournament = getIfExists(id, tournamentRepository);
         tournamentRepository.delete(tournament);

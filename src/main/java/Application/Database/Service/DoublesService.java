@@ -9,6 +9,7 @@ import Application.Exceptions.InstanceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Doubles create(DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{
         Map<String, List<Player> > players = validateAndRetrievePlayers(doublesCreateDTO);
         List<Player> winners = players.get("winners");
@@ -50,6 +52,7 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public Doubles update(Integer id, DoublesCreateDTO doublesCreateDTO) throws InstanceNotFoundException{
         Doubles doubles = getIfExists(id, doublesRepository);
         Map<String, List<Player> > players = validateAndRetrievePlayers(doublesCreateDTO);
@@ -67,6 +70,7 @@ public class DoublesService extends BaseService implements DoublesServiceInterfa
 
     @Override
     @Transactional
+    @Secured("ROLE_ADMIN")
     public void remove(Integer id) throws InstanceNotFoundException {
         Doubles doubles = getIfExists(id, doublesRepository);
         doublesRepository.delete(doubles);
