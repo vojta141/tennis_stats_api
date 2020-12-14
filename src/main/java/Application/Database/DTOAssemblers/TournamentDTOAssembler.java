@@ -35,6 +35,8 @@ public class TournamentDTOAssembler extends RepresentationModelAssemblerSupport<
         tournamentDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TournamentController.class).findById(tournament.getId())).withSelfRel());
         tournamentDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ClubController.class).findById(tournament.getClub().getId())).withRel("club"));
         tournamentDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TournamentController.class).getParticipants(tournament.getId())).withRel("participants"));
+        tournamentDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TournamentController.class).getTournamentDoubles(tournament.getId(), 0, 10)).withRel("participants"));
+        tournamentDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TournamentController.class).getTournamentSingles(tournament.getId(), 0, 10)).withRel("participants"));
         return tournamentDTO;
     }
 }

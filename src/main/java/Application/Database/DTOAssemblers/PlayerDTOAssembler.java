@@ -32,7 +32,7 @@ public class PlayerDTOAssembler extends RepresentationModelAssemblerSupport<Play
                 tournaments);
         playerDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PlayerController.class).findById(player.getId())).withSelfRel());
         playerDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ClubController.class).findById(player.getClub().getId())).withRel("club"));
-
+        playerDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(PlayerController.class).getPlayerTournaments(player.getClub().getId(), 0, 10)).withRel("player's tournaments"));
         return playerDTO;
     }
 }

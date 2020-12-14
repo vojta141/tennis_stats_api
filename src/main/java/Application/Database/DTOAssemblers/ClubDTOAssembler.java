@@ -20,6 +20,8 @@ public class ClubDTOAssembler extends RepresentationModelAssemblerSupport<Club, 
     public ClubDTO toModel(Club club) {
         ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
         clubDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ClubController.class).findById(club.getId())).withSelfRel());
+        clubDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ClubController.class).clubPlayers(club.getId())).withRel("club's players"));
+        clubDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ClubController.class).clubTournaments(club.getId())).withRel("club's tournaments"));
         return clubDTO;
     }
 }
