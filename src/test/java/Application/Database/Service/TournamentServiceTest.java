@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -95,6 +96,7 @@ public class TournamentServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void create(){
         for(Singles tmp : tournament.getSingles()){
             BDDMockito.given(singlesRepository.findById(tmp.getId())).willReturn(Optional.of(tmp));
@@ -119,6 +121,7 @@ public class TournamentServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void update(){
         for(Singles tmp : tournament.getSingles()){
             BDDMockito.given(singlesRepository.findById(tmp.getId())).willReturn(Optional.of(tmp));
@@ -143,9 +146,11 @@ public class TournamentServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void remove(){
         removeTest(tournament, tournamentRepository, tournamentService);
     }
+
     @Test
     void getParticipants(){
         BDDMockito.given(tournamentRepository.findById(tournament.getId())).willReturn(Optional.of(tournament));

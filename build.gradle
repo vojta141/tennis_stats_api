@@ -21,7 +21,7 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.2.8.jre7'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-
+    testImplementation 'org.springframework.security:spring-security-test:4.2.3.RELEASE'
     testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test'){

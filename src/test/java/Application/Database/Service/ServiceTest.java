@@ -10,6 +10,7 @@ import org.mockito.stubbing.Answer;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.test.context.support.WithMockUser;
 
 
 import java.util.List;

@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.*;
 
@@ -81,6 +82,7 @@ class DoublesServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void create(){
         BDDMockito.given(playerRepository.findById(doubles.getWinner1().getId())).
                 willReturn(Optional.of(doubles.getWinner1()));
@@ -96,6 +98,7 @@ class DoublesServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void update(){
         BDDMockito.given(playerRepository.findById(doubles.getWinner1().getId())).
                 willReturn(Optional.of(doubles.getWinner1()));
@@ -111,6 +114,7 @@ class DoublesServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void updateFail(){
         //MISSING PLAYER ID
         BDDMockito.given(playerRepository.findById(doubles.getLoser1().getId())).
@@ -147,6 +151,7 @@ class DoublesServiceTest extends ServiceTest{
 
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void remove(){
         removeTest(doubles, doublesRepository, doublesService);
     }

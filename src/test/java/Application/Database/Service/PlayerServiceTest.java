@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -77,6 +78,7 @@ public class PlayerServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void create(){
         for(Tournament tournament : player.getTournaments()) {
             BDDMockito.given(tournamentRepository.findById(tournament.getId()))
@@ -91,6 +93,7 @@ public class PlayerServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void update(){
 
         for(Tournament tournament : player.getTournaments()) {
@@ -106,6 +109,7 @@ public class PlayerServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void updateFail(){
         //DUPLICIT TOURNAMENT ID
         Set<Tournament> tournaments = player.getTournaments();
@@ -127,6 +131,7 @@ public class PlayerServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void remove(){
         removeTest(player, playerRepository, playerService);
     }

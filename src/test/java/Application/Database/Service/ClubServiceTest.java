@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ class ClubServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void create(){
         Club club = new Club("Tenis");
         ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
@@ -63,6 +65,7 @@ class ClubServiceTest extends ServiceTest{
     }
 
      @Test
+     @WithMockUser(roles = "ADMIN")
     void update(){
          Club club = new Club("Tenis");
          ClubDTO clubDTO = new ClubDTO(club.getId(), club.getName());
@@ -71,6 +74,7 @@ class ClubServiceTest extends ServiceTest{
      }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void remove(){
         Club club = new Club("Tenis");
         removeTest(club, clubRepository, clubService);

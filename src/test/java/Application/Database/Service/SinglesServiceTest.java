@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -69,6 +70,7 @@ public class SinglesServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void create(){
 
         BDDMockito.given(tournamentRepository.findById(singles.getTournament().getId()))
@@ -81,6 +83,7 @@ public class SinglesServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void createFail(){
         SinglesCreateDTO cdto = new SinglesCreateDTO(singles.getScore(), singles.getLoser().getId(),
                 singles.getLoser().getId(), singles.getTournament().getId());
@@ -93,6 +96,7 @@ public class SinglesServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void update(){
         BDDMockito.given(tournamentRepository.findById(singles.getTournament().getId()))
                 .willReturn(Optional.of(singles.getTournament()));
@@ -104,6 +108,7 @@ public class SinglesServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void updateFail(){
         //WINNER AND LOSER IDENTICAL
         BDDMockito.given(tournamentRepository.findById(singles.getTournament().getId()))
@@ -118,6 +123,7 @@ public class SinglesServiceTest extends ServiceTest{
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void remove(){
         removeTest(singles, singlesRepository, singlesService);
     }
