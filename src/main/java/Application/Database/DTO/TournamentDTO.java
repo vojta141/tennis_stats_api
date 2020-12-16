@@ -3,7 +3,6 @@ package Application.Database.DTO;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ public class TournamentDTO extends RepresentationModel<TournamentDTO> {
 
     private final String category;
 
-    private final int clubId;
+    private final int clubID;
 
     private final Set<Integer> singlesIDs;
 
@@ -31,7 +30,7 @@ public class TournamentDTO extends RepresentationModel<TournamentDTO> {
         this.date = date;
         this.name = name;
         this.category = category;
-        this.clubId = clubId;
+        this.clubID = clubId;
         this.singlesIDs = singlesIDs;
         this.doublesIDs = doublesIDs;
         this.playerIDs = playerIDs;
@@ -53,8 +52,8 @@ public class TournamentDTO extends RepresentationModel<TournamentDTO> {
         return category;
     }
 
-    public int getClubId() {
-        return clubId;
+    public int getClubID() {
+        return clubID;
     }
 
     public Set<Integer> getSinglesIDs() {
@@ -75,7 +74,7 @@ public class TournamentDTO extends RepresentationModel<TournamentDTO> {
         if (o == null || getClass() != o.getClass()) return false;
         TournamentDTO that = (TournamentDTO) o;
         return id == that.id &&
-                clubId == that.clubId &&
+                clubID == that.clubID &&
                 date.equals(that.date) &&
                 name.equals(that.name) &&
                 category.equals(that.category) &&
@@ -86,6 +85,6 @@ public class TournamentDTO extends RepresentationModel<TournamentDTO> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, name, category, clubId, singlesIDs, doublesIDs, playerIDs);
+        return Objects.hash(id, date, name, category, clubID, singlesIDs, doublesIDs, playerIDs);
     }
 }

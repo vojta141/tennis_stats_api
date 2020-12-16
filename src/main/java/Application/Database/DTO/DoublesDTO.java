@@ -1,12 +1,6 @@
 package Application.Database.DTO;
 
-import Application.Database.Enity.Player;
-import Application.Database.Enity.Tournament;
-import com.sun.istack.NotNull;
 import org.springframework.hateoas.RepresentationModel;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 public class DoublesDTO extends RepresentationModel<DoublesDTO> {
 
@@ -15,41 +9,41 @@ public class DoublesDTO extends RepresentationModel<DoublesDTO> {
 
     private final String score;
 
-    private final int winner1Id;
+    private final int winner1ID;
 
-    private final int winner2Id;
+    private final int winner2ID;
 
-    private final int loser1Id;
+    private final int loser1ID;
 
-    private final int loser2Id;
+    private final int loser2ID;
 
     private final int tournamentId;
 
-    public DoublesDTO(int id, String score, int winner1Id, int winner2Id,
-                      int loser1Id, int loser2Id, int tournamentId) {
+    public DoublesDTO(int id, String score, int winner1ID, int winner2ID, int loser1ID, int loser2ID,
+                      int tournamentId) {
         this.id = id;
         this.score = score;
-        this.winner1Id = winner1Id;
-        this.winner2Id = winner2Id;
-        this.loser1Id = loser1Id;
-        this.loser2Id = loser2Id;
+        this.winner1ID = winner1ID;
+        this.winner2ID = winner2ID;
+        this.loser1ID = loser1ID;
+        this.loser2ID = loser2ID;
         this.tournamentId = tournamentId;
     }
 
-    public int getWinner1Id() {
-        return winner1Id;
+    public int getWinner1ID() {
+        return winner1ID;
     }
 
-    public int getWinner2Id() {
-        return winner2Id;
+    public int getWinner2ID() {
+        return winner2ID;
     }
 
-    public int getLoser1Id() {
-        return loser1Id;
+    public int getLoser1ID() {
+        return loser1ID;
     }
 
-    public int getLoser2Id() {
-        return loser2Id;
+    public int getLoser2ID() {
+        return loser2ID;
     }
 
     public int getTournamentId() {
@@ -74,10 +68,10 @@ public class DoublesDTO extends RepresentationModel<DoublesDTO> {
             DoublesDTO DTO = (DoublesDTO) o;
             if(this.getId() == DTO.getId() &&
                     this.getScore().equals(DTO.getScore()) &&
-                    this.loser1Id == DTO.loser1Id &&
-                    this.loser2Id == DTO.loser2Id &&
-                    this.winner1Id == DTO.winner1Id &&
-                    this.winner2Id == DTO.winner2Id &&
+                    this.loser1ID == DTO.loser1ID &&
+                    this.loser2ID == DTO.loser2ID &&
+                    this.winner1ID == DTO.winner1ID &&
+                    this.winner2ID == DTO.winner2ID &&
                     this.tournamentId == DTO.tournamentId)
                 return true;
         }
