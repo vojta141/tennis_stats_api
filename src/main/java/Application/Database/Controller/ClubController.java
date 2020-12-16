@@ -8,6 +8,7 @@ import Application.Database.DTOAssemblers.ClubDTOAssembler;
 import Application.Database.DTOAssemblers.PlayerDTOAssembler;
 import Application.Database.DTOAssemblers.TournamentDTOAssembler;
 import Application.Database.Enity.Club;
+import Application.Database.Enity.Tournament;
 import Application.Database.Service.ClubService;
 import Application.Database.Service.PlayerService;
 import Application.Database.Service.ServiceInterface;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -76,5 +78,14 @@ public class ClubController extends BaseController<Club, ClubCreateDTO, ClubDTO>
         } catch (InstanceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/name/{clubName}")
+    public ClubDTO findByName(@PathVariable String clubName){
+        Optional<Club> clubOpt = clubService.findByName(clubName);
+        if(clubOpt.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return clubDTOAssembler.toModel(clubOpt.get());
+
     }
 }
