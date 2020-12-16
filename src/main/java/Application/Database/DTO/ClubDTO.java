@@ -16,6 +16,10 @@ public class ClubDTO extends RepresentationModel<ClubDTO> {
         return name;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o){
         if(o == this)
