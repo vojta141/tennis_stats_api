@@ -114,7 +114,7 @@ public class SinglesServiceTest extends ServiceTest{
         BDDMockito.given(tournamentRepository.findById(singles.getTournament().getId()))
                 .willReturn(Optional.of(singles.getTournament()));
         singles.setWinner(singles.getLoser());
-        singlesCreateDTO.setWinner(singlesCreateDTO.getLoser());
+        singlesCreateDTO.setWinnerID(singlesCreateDTO.getLoserID());
         BDDMockito.given(playerRepository.findById(singles.getWinner().getId()))
                 .willReturn(Optional.of(singles.getWinner()));
         BDDMockito.given(playerRepository.findById(singles.getLoser().getId()))

@@ -78,7 +78,7 @@ public class TournamentService extends BaseService implements TournamentServiceI
     @Transactional
     @Secured("ROLE_ADMIN")
     public Tournament create(TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
-        Club club = getIfExists(tournamentCreateDTO.getClub(), clubRepository);
+        Club club = getIfExists(tournamentCreateDTO.getClubID(), clubRepository);
         Set<Doubles> doubles = null;
         if (tournamentCreateDTO.getDoublesIDs() != null) {
             doubles = new HashSet<>();
@@ -107,7 +107,7 @@ public class TournamentService extends BaseService implements TournamentServiceI
     @Secured("ROLE_ADMIN")
     public Tournament update(Integer id, TournamentCreateDTO tournamentCreateDTO) throws InstanceNotFoundException{
         Tournament tournament = getIfExists(id, tournamentRepository);
-        Club club = getIfExists(tournamentCreateDTO.getClub(), clubRepository);
+        Club club = getIfExists(tournamentCreateDTO.getClubID(), clubRepository);
         Set<Doubles> doubles = null;
         if (tournamentCreateDTO.getDoublesIDs() != null) {
             doubles = new HashSet<>();

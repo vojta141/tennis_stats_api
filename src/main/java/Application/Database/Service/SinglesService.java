@@ -33,11 +33,11 @@ public class SinglesService extends BaseService implements SinglesServiceInterfa
     @Transactional
     @Secured("ROLE_ADMIN")
     public Singles create(SinglesCreateDTO singlesCreateDTO) throws InstanceNotFoundException {
-        if(singlesCreateDTO.getWinner() == singlesCreateDTO.getLoser())
+        if(singlesCreateDTO.getWinnerID() == singlesCreateDTO.getLoserID())
             throw new InstanceNotFoundException("Players are identical");
-        Tournament tournament = getIfExists(singlesCreateDTO.getTournament(), tournamentRepository);
-        Player winner = getIfExists(singlesCreateDTO.getWinner(), playerRepository);
-        Player loser = getIfExists(singlesCreateDTO.getLoser(), playerRepository);
+        Tournament tournament = getIfExists(singlesCreateDTO.getTournamentID(), tournamentRepository);
+        Player winner = getIfExists(singlesCreateDTO.getWinnerID(), playerRepository);
+        Player loser = getIfExists(singlesCreateDTO.getLoserID(), playerRepository);
         return singlesRepository.save(new Singles(singlesCreateDTO.getScore(), winner,
                 loser, tournament));
     }
@@ -47,11 +47,11 @@ public class SinglesService extends BaseService implements SinglesServiceInterfa
     @Secured("ROLE_ADMIN")
     public Singles update(Integer id, SinglesCreateDTO singlesCreateDTO) throws InstanceNotFoundException{
         Singles singles = getIfExists(id, singlesRepository);
-        if(singlesCreateDTO.getWinner() == singlesCreateDTO.getLoser())
+        if(singlesCreateDTO.getWinnerID() == singlesCreateDTO.getLoserID())
             throw new InstanceNotFoundException("Players are identical");
-        Tournament tournament = getIfExists(singlesCreateDTO.getTournament(), tournamentRepository);
-        Player winner = getIfExists(singlesCreateDTO.getWinner(), playerRepository);
-        Player loser = getIfExists(singlesCreateDTO.getLoser(), playerRepository);
+        Tournament tournament = getIfExists(singlesCreateDTO.getTournamentID(), tournamentRepository);
+        Player winner = getIfExists(singlesCreateDTO.getWinnerID(), playerRepository);
+        Player loser = getIfExists(singlesCreateDTO.getLoserID(), playerRepository);
         singles.setTournament(tournament);
         singles.setWinner(winner);
         singles.setLoser(loser);

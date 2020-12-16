@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -143,5 +144,37 @@ class ClubControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    void clubFindByName(){
+        BDDMockito.given(clubService.findByName(club.getName())).willReturn(Optional.of(club));
+        try {
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/club/name/{name}", club.getName())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(club.getName())))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BDDMockito.verify(clubService, Mockito.atLeastOnce()).findByName(club.getName());
+    }
+
+    @Test
+    void clubFindByNameFail(){
+         try {
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                            .get("/club/name/{name}", club.getName())
+                            .accept("application/json")
+                            .contentType("application/json")
+            ).andExpect(MockMvcResultMatchers.status().isNotFound());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BDDMockito.verify(clubService, Mockito.atLeastOnce()).findByName(club.getName());
     }
 }
