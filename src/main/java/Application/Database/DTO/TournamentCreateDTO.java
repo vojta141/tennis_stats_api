@@ -11,7 +11,7 @@ public class TournamentCreateDTO {
 
     private String category;
 
-    private int club;
+    private int clubID;
 
     private Set<Integer> singlesIDs;
 
@@ -22,13 +22,13 @@ public class TournamentCreateDTO {
     public TournamentCreateDTO() {
     }
 
-    public TournamentCreateDTO(Date date, String name, String category, int club,
-                               Set<Integer> singlesIDs, Set<Integer> doublesIDs,
+    public TournamentCreateDTO(Date date, String name, String category,
+                               int clubID, Set<Integer> singlesIDs, Set<Integer> doublesIDs,
                                Set<Integer> playerIDs) {
         this.date = date;
         this.name = name;
         this.category = category;
-        this.club = club;
+        this.clubID = clubID;
         this.singlesIDs = singlesIDs;
         this.doublesIDs = doublesIDs;
         this.playerIDs = playerIDs;
@@ -58,12 +58,12 @@ public class TournamentCreateDTO {
         this.category = category;
     }
 
-    public int getClub() {
-        return club;
+    public int getClubID() {
+        return clubID;
     }
 
-    public void setClub(int club) {
-        this.club = club;
+    public void setClubID(int clubID) {
+        this.clubID = clubID;
     }
 
     public Set<Integer> getSinglesIDs() {

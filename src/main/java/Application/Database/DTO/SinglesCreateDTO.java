@@ -6,41 +6,41 @@ import Application.Database.Enity.Tournament;
 public class SinglesCreateDTO {
     private String score;
 
-    private int winner;
+    private int winnerID;
 
-    private int loser;
+    private int loserID;
 
-    private int tournament;
+    private int tournamentID;
 
-    public SinglesCreateDTO(String score, int winner, int loser, int tournament) {
+    public SinglesCreateDTO(String score, int winnerID, int loserID, int tournamentID) {
         this.score = score;
-        this.winner = winner;
-        this.loser = loser;
-        this.tournament = tournament;
+        this.winnerID = winnerID;
+        this.loserID = loserID;
+        this.tournamentID = tournamentID;
     }
 
-    public int getWinner() {
-        return winner;
+    public int getWinnerID() {
+        return winnerID;
     }
 
-    public void setWinner(int winner) {
-        this.winner = winner;
+    public void setWinnerID(int winnerID) {
+        this.winnerID = winnerID;
     }
 
-    public int getLoser() {
-        return loser;
+    public int getLoserID() {
+        return loserID;
     }
 
-    public void setLoser(int loser) {
-        this.loser = loser;
+    public void setLoserID(int loserID) {
+        this.loserID = loserID;
     }
 
-    public int getTournament() {
-        return tournament;
+    public int getTournamentID() {
+        return tournamentID;
     }
 
-    public void setTournament(int tournament) {
-        this.tournament = tournament;
+    public void setTournamentID(int tournamentID) {
+        this.tournamentID = tournamentID;
     }
 
     public String getScore() {
