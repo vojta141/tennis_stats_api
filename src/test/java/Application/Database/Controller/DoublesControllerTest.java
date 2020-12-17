@@ -70,10 +70,10 @@ class DoublesControllerTest {
                             .get("/doubles/winner/{id}", winner.getId())
                             .accept("application/json")
                             .contentType("application/json")
-            ).andExpect(MockMvcResultMatchers.jsonPath("$[0].winner1Id", CoreMatchers.is(winner.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].winner2Id", CoreMatchers.is(doubles.getWinner2().getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser1Id", CoreMatchers.is(doubles.getLoser1().getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser2Id", CoreMatchers.is(doubles.getLoser2().getId())))
+            ).andExpect(MockMvcResultMatchers.jsonPath("$[0].winner1ID", CoreMatchers.is(winner.getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].winner2ID", CoreMatchers.is(doubles.getWinner2().getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser1ID", CoreMatchers.is(doubles.getLoser1().getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser2ID", CoreMatchers.is(doubles.getLoser2().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].score", CoreMatchers.is(doubles.getScore())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
         } catch (Exception e) {
@@ -94,10 +94,10 @@ class DoublesControllerTest {
                             .get("/doubles/loser/{id}", loser.getId())
                             .accept("application/json")
                             .contentType("application/json")
-            ).andExpect(MockMvcResultMatchers.jsonPath("$[0].winner1Id", CoreMatchers.is(loser.getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].winner2Id", CoreMatchers.is(doubles.getWinner2().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser1Id", CoreMatchers.is(doubles.getLoser1().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser2Id", CoreMatchers.is(doubles.getLoser2().getId())))
+            ).andExpect(MockMvcResultMatchers.jsonPath("$[0].winner1ID", CoreMatchers.is(loser.getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].winner2ID", CoreMatchers.is(doubles.getWinner2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser1ID", CoreMatchers.is(doubles.getLoser1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].loser2ID", CoreMatchers.is(doubles.getLoser2().getId())))
                     .andExpect(MockMvcResultMatchers.jsonPath("$[0].score", CoreMatchers.is(doubles.getScore())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
         } catch (Exception e) {
@@ -122,10 +122,10 @@ class DoublesControllerTest {
                             .accept("application/json")
                             .contentType("application/json")
             ).andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].score", CoreMatchers.is(doubles.getScore())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner1Id", CoreMatchers.is(doubles.getWinner1().getId())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner2Id", CoreMatchers.is(doubles.getWinner2().getId())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser1Id", CoreMatchers.is(doubles.getLoser1().getId())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser2Id", CoreMatchers.is(doubles.getLoser2().getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner1ID", CoreMatchers.is(doubles.getWinner1().getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner2ID", CoreMatchers.is(doubles.getWinner2().getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser1ID", CoreMatchers.is(doubles.getLoser1().getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser2ID", CoreMatchers.is(doubles.getLoser2().getId())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
         } catch (Exception e) {
             e.printStackTrace();

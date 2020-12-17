@@ -64,7 +64,7 @@ class TournamentControllerTest {
                             .contentType("application/json")
             ).andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].category", CoreMatchers.is(tournament.getCategory())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].id", CoreMatchers.is(tournament.getId())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].clubId", CoreMatchers.is(tournament.getClub().getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].clubID", CoreMatchers.is(tournament.getClub().getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].name", CoreMatchers.is(tournament.getName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].doublesIDs", CoreMatchers.is(tournament.getDoubles())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.tournamentDTOList[0].singlesIDs", CoreMatchers.is(tournament.getSingles())))
@@ -91,7 +91,7 @@ class TournamentControllerTest {
             ).andExpect(MockMvcResultMatchers.jsonPath("$.[0].name", CoreMatchers.is(player.getName())))
             .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", CoreMatchers.is(player.getId())))
             .andExpect(MockMvcResultMatchers.jsonPath("$.[0].bigPoints", CoreMatchers.is(player.getBigPoints())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.[0].clubId", CoreMatchers.is(player.getClub().getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.[0].clubID", CoreMatchers.is(player.getClub().getId())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
             BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getParticipants(tournament.getId());
         } catch (Exception e) {
@@ -120,11 +120,11 @@ class TournamentControllerTest {
                             .accept("application/json")
                             .contentType("application/json")
             ).andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].score", CoreMatchers.is(doubles.getScore())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser1Id", CoreMatchers.is(doubles.getLoser1().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser2Id", CoreMatchers.is(doubles.getLoser2().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner1Id", CoreMatchers.is(doubles.getWinner1().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner2Id", CoreMatchers.is(doubles.getWinner2().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].tournamentId", CoreMatchers.is(doubles.getTournament().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser1ID", CoreMatchers.is(doubles.getLoser1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].loser2ID", CoreMatchers.is(doubles.getLoser2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner1ID", CoreMatchers.is(doubles.getWinner1().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].winner2ID", CoreMatchers.is(doubles.getWinner2().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.doublesDTOList[0].tournamentID", CoreMatchers.is(doubles.getTournament().getId())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
             BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getDoubles(tournament.getId(), pageable);
         } catch (Exception e) {
@@ -153,9 +153,9 @@ class TournamentControllerTest {
                             .accept("application/json")
                             .contentType("application/json")
             ).andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].score", CoreMatchers.is(singles.getScore())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].loserId", CoreMatchers.is(singles.getLoser().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].winnerId", CoreMatchers.is(singles.getWinner().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].tournamentId", CoreMatchers.is(singles.getTournament().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].loserID", CoreMatchers.is(singles.getLoser().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].winnerID", CoreMatchers.is(singles.getWinner().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].tournamentID", CoreMatchers.is(singles.getTournament().getId())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
             BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).getSingles(tournament.getId(), pageable);
         } catch (Exception e) {

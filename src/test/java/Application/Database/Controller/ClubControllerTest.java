@@ -94,7 +94,7 @@ class ClubControllerTest {
             ).andExpect(MockMvcResultMatchers.jsonPath("$[0].name", CoreMatchers.is(player.getName())))
                     .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", CoreMatchers.is(player.getId())))
                     .andExpect(MockMvcResultMatchers.jsonPath("$[0].bigPoints", CoreMatchers.is(player.getBigPoints())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].clubId", CoreMatchers.is(player.getClub().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].clubID", CoreMatchers.is(player.getClub().getId())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,7 +117,7 @@ class ClubControllerTest {
             ).andExpect(MockMvcResultMatchers.jsonPath("$[0].id", CoreMatchers.is(tournament.getId())))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", CoreMatchers.is(tournament.getName())))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].category", CoreMatchers.is(tournament.getCategory())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].clubId", CoreMatchers.is(tournament.getClub().getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].clubID", CoreMatchers.is(tournament.getClub().getId())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
             BDDMockito.verify(tournamentService, Mockito.atLeastOnce()).findTournamentsByClubId(tournament.getClub().getId());
         } catch (InstanceNotFoundException e) {

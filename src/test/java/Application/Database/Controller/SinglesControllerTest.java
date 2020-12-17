@@ -67,8 +67,8 @@ class SinglesControllerTest {
                             .accept("application/json")
                             .contentType("application/json")
             ).andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].score", CoreMatchers.is(singles.getScore())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].winnerId", CoreMatchers.is(singles.getWinner().getId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].loserId", CoreMatchers.is(singles.getLoser().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].winnerID", CoreMatchers.is(singles.getWinner().getId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$._embedded.singlesDTOList[0].loserID", CoreMatchers.is(singles.getLoser().getId())))
                     .andExpect(MockMvcResultMatchers.status().isOk());
         } catch (Exception e) {
             e.printStackTrace();
