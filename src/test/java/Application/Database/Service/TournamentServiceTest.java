@@ -78,7 +78,7 @@ public class TournamentServiceTest extends ServiceTest{
                 tournament.getDoubles().stream().map(BaseEntity::getId).collect(Collectors.toSet()),
                 tournament.getPlayers().stream().map(BaseEntity::getId).collect(Collectors.toSet()));
         tournamentCreateDTO = new TournamentCreateDTO(tournamentDTO.getDate(), tournamentDTO.getName(),
-                tournamentDTO.getCategory(), tournamentDTO.getClubId(), tournamentDTO.getSinglesIDs(),
+                tournamentDTO.getCategory(), tournamentDTO.getClubID(), tournamentDTO.getSinglesIDs(),
                 tournamentDTO.getDoublesIDs(), tournamentDTO.getPlayerIDs());
     }
     @Test

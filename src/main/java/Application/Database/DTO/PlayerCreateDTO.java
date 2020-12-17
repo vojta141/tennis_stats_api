@@ -1,7 +1,5 @@
 package Application.Database.DTO;
 
-import Application.Database.Enity.Club;
-
 import java.util.Date;
 import java.util.Set;
 
@@ -13,7 +11,7 @@ public class PlayerCreateDTO {
 
     private int bigPoints;
 
-    private int clubId;
+    private int clubID;
 
     private Set<Integer> tournamentIDs;
 
@@ -21,11 +19,11 @@ public class PlayerCreateDTO {
     }
 
     public PlayerCreateDTO(String name, Date birthDate, int bigPoints,
-                           int clubId, Set<Integer> tournamentIDs) {
+                           int clubID, Set<Integer> tournamentIDs) {
         this.name = name;
         this.birthDate = birthDate;
         this.bigPoints = bigPoints;
-        this.clubId = clubId;
+        this.clubID = clubID;
         this.tournamentIDs = tournamentIDs;
     }
 
@@ -53,12 +51,12 @@ public class PlayerCreateDTO {
         this.bigPoints = bigPoints;
     }
 
-    public int getClubId() {
-        return clubId;
+    public int getClubID() {
+        return clubID;
     }
 
-    public void setClubId(int clubId) {
-        this.clubId = clubId;
+    public void setClubID(int clubID) {
+        this.clubID = clubID;
     }
 
     public Set<Integer> getTournamentIDs() {

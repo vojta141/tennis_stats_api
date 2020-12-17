@@ -35,7 +35,7 @@ public class PlayerService extends BaseService implements PlayerServiceInterface
     @Transactional
     @Secured("ROLE_ADMIN")
     public Player create (PlayerCreateDTO playerCreateDTO) throws InstanceNotFoundException {
-        Club club = getIfExists(playerCreateDTO.getClubId(), clubRepository);
+        Club club = getIfExists(playerCreateDTO.getClubID(), clubRepository);
         Set<Integer> tournamentIDs = playerCreateDTO.getTournamentIDs();
         Set<Tournament> tournaments = null;
         if(tournamentIDs != null) {
@@ -54,7 +54,7 @@ public class PlayerService extends BaseService implements PlayerServiceInterface
     @Secured("ROLE_ADMIN")
     public Player update(Integer id, PlayerCreateDTO playerCreateDTO) throws InstanceNotFoundException{
         Player player = getIfExists(id, playerRepository);
-        Club club = getIfExists(playerCreateDTO.getClubId(), clubRepository);
+        Club club = getIfExists(playerCreateDTO.getClubID(), clubRepository);
         Set<Integer> tournamentIDs = playerCreateDTO.getTournamentIDs();
         Set<Tournament> tournaments = null;
         if(tournamentIDs != null) {

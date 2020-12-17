@@ -30,7 +30,6 @@ public class ClubService extends BaseService implements ClubServiceInterface {
 
     @Override
     public Page<Club> findAll(Pageable pageable){
-        System.out.println("WTF");
         return clubRepository.findAll(pageable);
     }
 
