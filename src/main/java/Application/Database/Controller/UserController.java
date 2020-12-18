@@ -42,7 +42,7 @@ public class UserController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         try{UserDetails newUser = User.builder()
                 .username(userCreateDTO.getUsername())//password
-                .password(encoder.encode(userCreateDTO.getPassword()))
+                .password("{bcrypt}" + encoder.encode(userCreateDTO.getPassword()))
                 .roles("PLAYER")
                 .build();
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
