@@ -14,5 +14,4 @@ public interface TournamentRepository extends JpaRepository<Tournament, Integer>
     List<Tournament> findAllByDate(Date date);
 
     List<Tournament> findAllByClubId(int id);
-
 }

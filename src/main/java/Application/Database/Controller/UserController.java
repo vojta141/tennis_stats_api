@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +39,10 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     @PostMapping("/create")
     public void create(@RequestBody UserCreateDTO userCreateDTO){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         try{UserDetails newUser = User.builder()
                 .username(userCreateDTO.getUsername())//password
-                .password(userCreateDTO.getPassword())
+                .password(encoder.encode(userCreateDTO.getPassword()))
                 .roles("PLAYER")
                 .build();
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
