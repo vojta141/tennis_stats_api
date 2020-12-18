@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 
@@ -37,9 +38,11 @@ public class Application {
      */
     /*@Bean
     UserDetailsManager users(DataSource dataSource) {
+        String adminPassword = "password";
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         UserDetails admin = User.builder()
-                .username("admin2")//password
-                .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
+                .username("admin")
+                .password("{bcrypt}" + encoder.encode(adminPassword))
                 .roles("ADMIN")
                 .build();
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
