@@ -53,8 +53,8 @@ public class UserController {
     }
 
     @Secured("ROLE_ADMIN")
-    @DeleteMapping("/delete")
-    public void delete(@RequestBody String username){
+    @DeleteMapping("/delete/{username}")
+    public void delete(@PathVariable String username){
         try{
             JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
             users.deleteUser(username);
