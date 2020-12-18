@@ -1,8 +1,13 @@
+drop table if exists group_authorities;
+drop table if exists group_members;
+drop table if exists groups;
+drop table if exists authorities;
+drop table if exists users;
+
 
 create table users(
                       username varchar(50) not null primary key,
                       password varchar(500) not null,
-                      associated_player_id int not null,
                       enabled boolean not null
 );
 
