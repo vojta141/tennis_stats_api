@@ -1,4 +1,4 @@
-1. Install IntelliJ if you haven't already
+1. Install IntelliJ
 2. Open terminal na cd to project folder with docker-compose.yml
 3. Run "docker volume create --name=postgres_data"
 4. Run "docker-compose up"
